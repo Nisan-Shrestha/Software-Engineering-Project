@@ -5,6 +5,7 @@ var projectSchema = new mongoose.Schema({
     year: String,
     link: String,
     description: String,
+    reviewStatus: Boolean,
     authors: [{
 
         id: {

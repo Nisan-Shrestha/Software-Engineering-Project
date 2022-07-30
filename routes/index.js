@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 // ROot
 router.get('/',function(req,res) {
-  res.render('landing')
+  res.redirect('/projects')
 })
 
 // Show Register Form
