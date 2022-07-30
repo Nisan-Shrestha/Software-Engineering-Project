@@ -6,6 +6,7 @@ const express = require('express'),
       passport = require('passport'),
       LocalStrategy = require('passport-local'),
       methodOverride = require('method-override'),
+      Project=require('./models/project'),
       Campground = require('./models/campground'),
       Comment = require('./models/comment')
       User    = require('./models/user')
@@ -18,14 +19,14 @@ const indexRoutes        = require('./routes/index');
 
 const MongoClient = require('mongodb').MongoClient;
 
-const uri = "mongodb+srv://nisan:Shrestha@nisan.xxkt3.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://soft-eng:hahawthwtf@cluster0.nqijx.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
   const collection = client.db("test").collection("devices");
   // perform actions on the collection object
   client.close();
 });
-var url = process.env.DATABASEURL || "mongodb+srv://nisan:Shrestha@nisan.xxkt3.mongodb.net/?retryWrites=true&w=majority"
+var url = process.env.DATABASEURL || "mongodb+srv://soft-eng:hahawthwtf@cluster0.nqijx.mongodb.net/?retryWrites=true&w=majority"
 console.log(process.env.DATABASEURL);
  
 mongoose.connect(url , {useNewUrlParser:true})
@@ -62,6 +63,7 @@ app.use('/',indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/projects",projectRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
+app.use("/projects/:id/comments",commentRoutes);
 const port = process.env.PORT || 3000 ;
 app.listen(port, process.env.IP,function(){
   console.log("serving Local @ 3000");

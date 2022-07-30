@@ -5,6 +5,7 @@ var projectSchema = new mongoose.Schema({
     year: String,
     link: String,
     description: String,
+    image:String,
     reviewStatus: Boolean,
     authors: [{
 
@@ -18,4 +19,4 @@ var projectSchema = new mongoose.Schema({
     supervisor: String
 })
 
-module.exports = mongoose.model("Campground", campgroundSchema)
+module.exports = mongoose.model("Project", projectSchema)

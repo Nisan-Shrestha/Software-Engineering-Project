@@ -1,0 +1,33 @@
+<%- include('../partials/header'); -%>
+<div class="container">
+  <div class="row">
+    <h1 style="text-align: center;">Edit <%=project.name%> Entry</h1>
+    <div style="width: 30% ; margin: 30px auto; ">
+      <form action="/projects/<%=project._id%>?_method=PUT" method="post">
+        <div class="form-group">
+          <input class="form-control" type="text" name="project[name]" value="<%=project.title%>" placeholder="Title" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="number" name="project[year]" value="<%=project.year%>" placeholder="Year" min="1900" max ="2030" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" name="project[link]" value="<%=project.link%>" placeholder="Link" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" name="project[author]" value="<%=project.author%>" placeholder="Author" required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" name="project[supervisor]" value="<%=project.supervisor%>" placeholder="Supervisor"required>
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="text" name="project[image]" value="<%=project.image%>" placeholder="Image Url" required>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-lg btn-primary btn-block"> UPDATE!</button>
+        </div>
+      </form>
+      <a href="/projects/<%=project._id%>"> Go Back</a>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer'); -%>

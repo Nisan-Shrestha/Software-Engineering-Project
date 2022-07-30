@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+Project = require('./models/project'),
 Campground = require('./models/campground'),
 Comment = require('./models/comment'),
 User    = require('./models/user')
@@ -35,7 +36,7 @@ function seedDB(){
     }
     })
   // remove camps
-  Campground.remove({},function(err){
+  Project.remove({},function(err){
     // if(err){
     //   console.log(err);
     // }
