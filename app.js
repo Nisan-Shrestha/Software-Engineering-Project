@@ -13,6 +13,7 @@ const express = require('express'),
 
 const commentRoutes     = require('./routes/comments');
 const campgroundRoutes  = require('./routes/campgrounds');
+const projectRoutes  = require('./routes/projects');
 const indexRoutes        = require('./routes/index');
 
 const MongoClient = require('mongodb').MongoClient;
@@ -59,6 +60,7 @@ app.use(function (req,res,next) {
 // Routes ======================
 app.use('/',indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
+app.use("/projects",projectRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 const port = process.env.PORT || 3000 ;
 app.listen(port, process.env.IP,function(){
