@@ -18,11 +18,13 @@
             <div class="titlebar">
                 <div class="pjName"><hr/><%= project.title %><hr/></div>
                 
-                <% if(currentUser  && project.author.id.equals(currentUser._id)){%>
-                  <Button class="editButton">Edit</Button>
-                    <Button class="deleteButton">Delete</Button>
+
+                  <% if(currentUser  && project.author.filter(e => e.id.equals(currentUser._id)).length > 0 ){%>
+                    <a href="/projects/<%= project._id %>/edit"><Button class="editButton">Edit</Button></a> 
+                    <form action="/projects/<%= project._id %>?_method=DELETE" method="post">
+                        <Button class="deleteButton">Delete</Button>
+                    </form>
                   <% }%>
-                
 
                 <div class="status">Approved</div>
             </div>
@@ -62,6 +64,8 @@
       .titlebar{
         display: flex;
         flex-direction: row;
+        justify-content: center;
+        align-items: center;
       }
       
       .signedInfo{
@@ -79,6 +83,7 @@
       .editButton{
         flex-grow: 1;
         align-self: center;
+
       }
       .deleteButton{
         flex-grow: 1;

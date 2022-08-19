@@ -11,9 +11,11 @@ middlewareObj.checkProjectOwnership = function (req,res,next) {
         console.log(err)
       }
       else{
-        if(foundProject.author.id.equals(req.user._id)){
+        //if(foundProject.author.id.equals(req.user._id)){
+        if(foundProject.author.filter(e => e.id.equals(req.user._id)).length > 0){
           return next()
         }
+        
         else{
           req.flash("error","You are not Authorized to do that!")
           res.redirect('back')

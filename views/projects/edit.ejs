@@ -1,4 +1,4 @@
-<%- include('../partials/header'); -%>
+<!-- <%- include('../partials/header'); -%>
 <div class="container">
   <div class="row">
     <h1 style="text-align: center;">Edit <%=project.name%> Entry</h1>
@@ -30,4 +30,164 @@
     </div>
   </div>
 </div>
-<%- include('../partials/footer'); -%>
+<%- include('../partials/footer'); -%> -->
+
+
+<!DOCTYPE html>
+<html>
+    <head><link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" /></head>
+    <body>
+        <div class="navbar">Final Year Major Project Database</div>
+        <div class="designform">
+        <form action="/projects/<%=project._id%>?_method=PUT" method="post">
+            <h1 class="heading">Editing a Project</h1>
+            <div class="formcontainer">
+                <hr/>
+                
+                    <input class="boxSize" type="text" name="project[title]" value="<%=project.title%>"  placeholder=" Title" required>
+                    <input class="boxSize" type="text" name="project[authors]" value="<%=project.authors%>"  placeholder=" Author" required>
+                    <input class="boxSize" type="text" name="project[supervisor]" value="<%=project.supervisor%>"  placeholder=" Supervisor"required>
+                    <input class="boxSize" type="number" name="project[year]"value="<%=project.year%>"  placeholder=" Year" min="1900" max ="2030" required>
+                    <input class="boxSize" type="text" name="project[link]" value="<%=project.link%>"  placeholder=" Link" required>
+                    <input class="boxSize" type="text" name="project[abstract]" value="<%=project.abstract%>"  placeholder=" Abstract" required>
+                    <button class="formbutton"> Update</button>
+                </div>
+              </form>
+              <div class="cancel">
+                <a href="/projects""><button >Cancel</button></a>   
+              </div>
+        </div>
+    </body>
+    </html>
+
+    <style>
+                * {
+        box-sizing: border-box;
+        }
+      body {
+        font-size: 14px;
+        background: rgba(224,224,224,1);
+
+      }
+      .designform{
+        height:auto;
+        width:50%; 
+        position: relative;
+        left: 25%;
+        background: rgb(255, 255, 255);
+        border: 3px solid rgba(0,0,0,1);
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        margin:10px;
+        display: flex;
+        flex-direction: column;
+        justify-items: center;
+      }
+      h1 {
+      font-size:18;
+      text-align: center;
+      }
+      input {
+        width: 100%;
+        padding: 16px 8px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 3px solid rgba(0,0,0,1);
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        box-sizing: border-box;
+        font-family: Inter;
+        font-weight: Regular;
+        font-size: 20px;
+      }
+      button{
+        width:100%;
+        background: rgba(217,217,217,1);
+        border: none;
+        padding: 16px 32px;
+        margin: 10px;
+        text-align: center;
+        font-family: Inter;
+        font-size: 20px;
+        position: relative;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+      }
+
+
+      
+      hr{
+        height: 2px;
+        background: rgba(224,224,224,1);
+        border-width:2px;
+      }
+      .cancel{
+        display: block;
+        margin-left: 10px;
+        margin-right: 20px;
+        padding-left: 10px;
+        padding-right: 20px;
+        justify-content: center;
+      }
+     
+      .buttons{
+        display: grid;
+        grid-template-columns: auto auto;
+        align-content: center;
+        column-gap: 10px;
+      }
+
+
+      .navbar {
+        background: rgba(255,255,255,1);
+        opacity: 1;
+        border: 3px solid rgba(0,0,0,1);
+        padding: 10px;
+        overflow: hidden;
+        font-family: Inter;
+        font-weight: Regular;
+        font-size: 40px;
+        display: flex;
+      }
+      .formcontainer{
+        display: flex;
+        flex-direction: column;
+        margin: 24px 50px 12px;
+        align-items: center;
+        justify-content: center;
+        
+      }
+      .container{
+        background: rgb(255, 255, 255);
+      }
+
+      /* @media screen and (max-width: 800px) {
+        .buttons{
+            display: grid;
+            grid-template-columns:auto;
+            align-content: center;
+            justify-content: center;
+        }
+        form {
+        height:auto;
+        width: 100%;
+        left:0px;
+        position: relative  ;
+        background: rgb(255, 255, 255);
+        border: 3px solid rgba(0,0,0,1);
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        margin: 10px;
+      }
+        
+    } */
+
+      </style>
