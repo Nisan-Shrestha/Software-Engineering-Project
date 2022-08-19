@@ -1,4 +1,4 @@
-<%- include('../partials/header'); -%>
+<!-- <%- include('../partials/header'); -%>
 
 <div class="container">
   <header class="jumbotron">
@@ -31,4 +31,226 @@
   </div>
 </div>
 
-<%- include('../partials/footer'); -%>
+<%- include('../partials/footer'); -%> -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    </head>
+<body>
+    
+        <div class="navbar">
+            <div class="heading">Final Year Major Project Database</div>
+             <% if(!currentUser){%>
+            <a href="/login"><Button>Log in</Button></a>
+          <% }else{%>
+           <div class="signedInfo"> Signed In as: <%= currentUser.username%> </div>
+            <a href="/logout"><Button>Log out</Button></a>
+          <%}%>
+        </div>
+
+        
+          <%if(error && error.length > 0){ %>
+              <% console.log(error[0]) %>
+            
+          <% } %>
+          <%if(success && success.length > 0){ %>
+              <% console.log(success[0])%>
+            
+          <% } %>
+      
+      
+        <% if(!currentUser){%>
+          <div class=""gridlayout2></div>
+          <% }else{%>
+            <div class="gridlayout"> 
+           <div class="functionality">
+            <a href="/projects/new"><Button>New Project</Button></a>
+        </div>
+          <%}%>
+          
+            <div class="container">
+                <form class="searchbar">
+                    <input class="Search" type="text" name="search" placeholder="Search">
+                    <Button class="search" type="submit">S</Button>
+                </form>    
+                <select class="options" name="options">
+                    <option value="name">Search by Project Name</option>
+                    <option value="author">Search by Project Author</option>
+                    <option value="supervisor">Search by Supervisor </option>
+                </select>
+            </div>
+        </div>
+        <div class="projectlist">
+          <%  projects.forEach(function(project){%>
+          
+            <div class="project"> 
+              <div class="projectName">Project Name: <%= project.title %> </div>
+              <div class="projectAuthor"> Authors: <%= project.authors %></div>
+              <div class="supervisor"> Supervisor: <%project.supervisor%> </div>
+              <a href="/projects/<%= project._id%>"><Button class="moreinfo"> More info</Button></a>
+            </div> 
+          <% }) %>
+        </div>
+      
+</body>
+</html> <br/><br/>
+
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    body {
+        font-size: 14px;
+        background: rgba(224,224,224,1);
+
+      }
+    button{
+        border: none;
+        padding: 16px 32px;
+        margin: 5px;
+        text-align: center;
+        font-family: Inter;
+        font-size: 20px;
+       border-radius: 25PX;
+      }
+     
+    .signedInfo{
+      font-family: Inter;
+        font-size: 20px;
+    }
+
+    .navbar {
+        background: rgba(255,255,255,1);
+        border: 3px solid rgba(0,0,0,1);
+        overflow: hidden;
+        font-family: Inter;
+        font-size: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items:center;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+    .container{
+        grid-area: Search;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin:5px;
+        margin-top:10px;
+        margin-bottom: 10px;
+    }
+    .searchbar{
+        width:auto;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+        padding: 10px;
+        overflow: hidden;;
+    }
+    .searchbar input{
+        background: transparent;
+        flex:1;
+        border:0;
+        outline: none;
+        padding: 24px 20px;
+        font-size: 20px;
+        font-family: Inter;
+        align-self:center ;
+    }
+    .options{
+        background: white;
+        border: 0;
+        outline: 0;
+        margin-left: 10px;
+        padding: 24px 20px;
+        font-size: 20px;
+        font-family: Inter;
+        border-radius: 25px;
+        align-self:center ;
+    }
+    .projectlist{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: white;
+        height:auto;
+        width:auto;
+        margin:5px;
+        border-radius: 25px;
+        padding: 10px;
+
+    }
+    .gridlayout{
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 1fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas:
+        "Function Search Search";
+    }
+    .gridlayout2{
+        display: grid;
+        grid-template-columns: 0.5fr 1.5fr 1fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas:
+        "Search Search Search";
+    }
+    .functionality{
+        background-color: white;
+        grid-area:Function;
+        display:flex;
+        flex-direction: column;
+        margin:5px;
+        margin-top: 10px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+    }
+    .project{
+        border: 3px solid rgba(0,0,0,1);
+        border-radius: 25px;
+        padding: 10px;
+        margin: 10px;
+        display:grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        gap: 0px 0px;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "Project-name Project-name ."
+            "Project-Author Project-Author Button"
+            "Supervisor Supervisor .";
+    }
+    .projectName{
+        grid-area: Project-name;
+        font-size: 30px;
+        font-family: Inter;
+    }
+    .projectAuthor{
+        grid-area: Project-Author;
+        font-size: 20px;
+        font-family: Inter;
+    }
+    .supervisor{
+        grid-area: Supervisor; 
+        font-size: 20px;
+        font-family: Inter;
+    }
+    .moreinfo{
+        grid-area: Button; 
+        position: relative;
+        width:50%;
+        left: 25%;
+    }
+</style>
+
+  
+
+

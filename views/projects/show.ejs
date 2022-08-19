@@ -1,58 +1,192 @@
-<%- include('../partials/header'); -%>
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-3">
-      <p class="lead">YelpCamp</p>
-      <div class="list-group">
-        <li class="list-group-item active">Info 1</li>
-        <li class="list-group-item">Info 1</li>
-        <li class="list-group-item">Info 1</li>
-      </div>
-    </div>
-    <div class="col-md-9">
-      <div class="thumbnail">
-        <img class="img-responsive" src="<%= project.image %>" alt="">
-        <div class="caption-full">
-          <h4 class="pull-right">$<%= project.year %>/night</h4>
-          <h4><a href=""><%= project.title %></a></h4>
-          <p><%= project.description %></p> 
-          <p><em>Submitted By: </em><%= project.author.username %></p>
-          <% if(currentUser && project.author.id.equals(currentUser._id)){ %>
-            <a href="/projects/<%= project._id %>/edit" class="btn btn-warning">Edit</a> 
-            <form action="/projects/<%= project._id %>?_method=DELETE" method="post" class=" delete-form">
-              <button class="btn btn-danger">DELETE!</button>
-            </form>
-            <% }%>
-          </div>
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    </head>
+<body>
+    
+        <div class="navbar">
+            <div class="heading">Final Year Major Project Database</div>
+            <% if(!currentUser){%>
+            <% }else{%>
+             <div class="signedInfo"> Signed In as: <%= currentUser.username%> </div>
+            <%}%>
         </div>
-        <div class="well">
-          <div class="text-right">
-            <a class="btn btn-success" href="/projects/<%= project._id%>/comments/new">Add Comment</a>
-          </div>
-          <hr>
-          <% project.comments.forEach(function(comment){ %>
-            <div class="row">
-              <div class="col-md-12">
-                <strong><%= comment.author.username %></strong>
-                <span class="pull-right">10 Days ago.</span>
-                <p>
-                  <%= comment.text %>
-                </p>
-                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                <a href="/projects/<%= project._id%>/comments/<%=comment._id%>/edit" class="btn btn-xs btn-warning">
-                  Edit
-                </a>
-                <form action="/projects/<%= project._id%>/comments/<%=comment._id%>?_method=DELETE" method="post" class ="delete-form">
-                  <button class="btn btn-danger btn-xs">DELETE!</button>
-                </form>
-                <% } %>
-              </div>
-            </div>
-          <% }) %>
-      </div>
-    </div>
-  </div>
-</div>
+        
+            <div class="project"> 
+            <div class="titlebar">
+                <div class="pjName"><hr/><%= project.title %><hr/></div>
+                
+                <% if(currentUser  && project.author.id.equals(currentUser._id)){%>
+                  <Button class="editButton">Edit</Button>
+                    <Button class="deleteButton">Delete</Button>
+                  <% }%>
+                
 
-<%- include('../partials/footer'); -%>
+                <div class="status">Approved</div>
+            </div>
+            <div class="content">Authors:<%= project.authors %></div>
+            <div class="content">Supervisor:<%= project.supervisor %></div>
+            <div class="content">Year:<%= project.year %></div>
+            <div class="content">Link:<%= project.link%></div>
+            <div class="content">Abstract
+                <div>
+                  <%= project.abstract %>
+                </div>
+            </div>   
+        
+        
+</body>
+</html> <br/><br/>
+
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    body {
+        font-size: 14px;
+        background: rgba(224,224,224,1);
+
+      }
+    button{
+        border: none;
+        padding: 16px 32px;
+        margin: 5px;
+        text-align: center;
+        font-family: Inter;
+        font-size: 20px;
+       border-radius: 25PX;
+      }
+
+      .titlebar{
+        display: flex;
+        flex-direction: row;
+      }
+      
+      .signedInfo{
+        font-size: 20px;
+        font-family: Inter;
+      }
+
+      .pjName{
+        font-family: Inter;
+        font-size: 40px;
+        flex-grow: 3;
+        align-self: center;
+        text-align: center;
+      }
+      .editButton{
+        flex-grow: 1;
+        align-self: center;
+      }
+      .deleteButton{
+        flex-grow: 1;
+        align-self: center;
+      }
+      .status{
+        flex-grow: 1;
+        text-align: center;
+        align-self:center;
+        font-family: Inter;
+        font-size: 20px;
+        background: rgba(224,224,224,1);
+        border-radius: 25px;;
+      }
+      .content{
+        font-family: Inter;
+        font-size: 20px;
+        padding: 10px;
+      }
+
+    .navbar {
+        background: rgba(255,255,255,1);
+        border: 3px solid rgba(0,0,0,1);
+        overflow: hidden;
+        font-family: Inter;
+        font-size: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items:center;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+    .container{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-top: 10px;
+        margin-bottom:10px
+    }
+    .searchbar{
+        width:50%;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+        padding: 10px;
+        overflow: hidden;;
+    }
+    .searchbar input{
+        background: transparent;
+        flex:1;
+        border:0;
+        outline: none;
+        padding: 24px 20px;
+        font-size: 20px;
+        font-family: Inter;
+        align-self:center ;
+    }
+    .options{
+        background: white;
+        border: 0;
+        outline: 0;
+        margin-left: 10px;
+        padding: 24px 20px;
+        font-size: 20px;
+        font-family: Inter;
+        border-radius: 25px;
+        align-self:center ;
+    }
+    .projectlist{
+        background-color: white;
+        height:100%;
+        width:100%;
+        border-radius: 25px;
+        padding: 10px;
+    }
+    .project{
+        background-color: white;
+        border: 3px solid rgba(0,0,0,1);
+        border-radius: 25px;
+        padding: 10px;
+        margin: 10px;
+    }
+    .projectName{
+        grid-area: Project-name;
+        font-size: 30px;
+        font-family: Inter;
+    }
+    .projectAuthor{
+        grid-area: Project-Author;
+        font-size: 20px;
+        font-family: Inter;
+    }
+    .supervisor{
+        grid-area: Supervisor; 
+        font-size: 20px;
+        font-family: Inter;
+    }
+    .moreinfo{
+        grid-area: Button; 
+        position: relative;
+        width:50%;
+        left: 25%;
+    
+    }
+
+
+</style>

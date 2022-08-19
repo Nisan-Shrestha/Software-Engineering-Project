@@ -26,13 +26,14 @@ router.post('/',middleware.isLoggedIn,function (req,res) {
   var link = req.body.link
   var image = req.body.image
   var supervisor = req.body.supervisor
+  var authors = req.body.authors
   var author = {
     id : req.user._id,
     username : req.user.username
   } 
   var reviewStatus = req.body.review
   
-  var newProject = { title :title  , image :image, description :description, author:author, year:year, link:link, supervisor:supervisor,reviewStatus:reviewStatus}
+  var newProject = { title :title  , image :image, description :description, author:author,authors:authors, year:year, link:link, supervisor:supervisor,reviewStatus:reviewStatus}
   
   Project.create(newProject,function (err,newProj) {
     if (err) {

@@ -7,7 +7,8 @@ var projectSchema = new mongoose.Schema({
     description: String,
     image:String,
     reviewStatus: Boolean,
-    authors: [{
+    authors:String,
+    author: [{
 
         id: {
             type: mongoose.Schema.Types.ObjectId,
