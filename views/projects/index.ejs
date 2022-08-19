@@ -70,13 +70,13 @@
           <%}%>
           
             <div class="container">
-                <form class="searchbar">
+                <form class="searchbar" action="/search" method="get">
                     <input class="Search" type="text" name="search" placeholder="Search">
                     <Button class="search" type="submit">S</Button>
                 </form>    
                 <select class="options" name="options">
                     <option value="name">Search by Project Name</option>
-                    <option value="author">Search by Project Author</option>
+                    <!-- <option value="author">Search by Project Author</option> -->
                     <option value="supervisor">Search by Supervisor </option>
                 </select>
             </div>

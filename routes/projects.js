@@ -81,8 +81,19 @@ router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
     if (err) {
       res.redirect('/projects/'+req.params.id)
     }
-    res.redirect('/projects')
+    res.redirect('projects/show')
   })
+})
+
+//search
+router.get("/search",async(req,res)=>{
+  Project.find({$or:[{title:{'$regex':req.query.dsearch}},{supervisor:{'$regex':req.query.dsearch}}]},(err,data)=>{  
+    if(err){  
+    console.log(err);  
+    }else{  
+    res.render('projects/index',{projects:data});  
+    }  
+  }) 
 })
 
 module.exports = router
