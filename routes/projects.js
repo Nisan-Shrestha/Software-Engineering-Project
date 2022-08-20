@@ -45,16 +45,36 @@ router.post('/',middleware.isLoggedIn,function (req,res) {
   })
 })
 
-router.get('/:id',function(req,res){
-  Project.findById(req.params.id).populate('comments').exec(function(err,foundGround){
-    if(err){
-      console.log("ERRORORORORO:",err);
-    }
-    else{
-      res.render('projects/show',{project:foundGround})
-    }
-    })
-})
+
+
+
+//search
+router.get('/search',(req,res)=>{ 
+  try {  
+    Project.find({$or:[{title:{'$regex':req.query.dsearch}},{supervisor:{'$regex':req.query.dsearch}}]},(err,data)=>{  
+    if(err){  
+      console.log(err);  
+    }else{  
+      res.render('projects/index',{projects:data});  
+      //res.send("DOne")
+    }  
+    })  
+  } catch (error) {  
+    console.log(error);  
+  }  
+  //console.log(req.query);
+  }); 
+
+  router.get('/:id',function(req,res){
+    Project.findById(req.params.id).populate('comments').exec(function(err,foundGround){
+      if(err){
+        console.log("ERRORORORORO:",err);
+      }
+      else{
+        res.render('projects/show',{project:foundGround})
+      }
+      })
+  })
 
 // edit route
 router.get('/:id/edit',middleware.checkProjectOwnership,function (req,res) {
@@ -85,15 +105,6 @@ router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
   })
 })
 
-//search
-router.get("/search",async(req,res)=>{
-  Project.find({$or:[{title:{'$regex':req.query.dsearch}},{supervisor:{'$regex':req.query.dsearch}}]},(err,data)=>{  
-    if(err){  
-    console.log(err);  
-    }else{  
-    res.render('projects/index',{projects:data});  
-    }  
-  }) 
-})
+ 
 
 module.exports = router
