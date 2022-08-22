@@ -1,42 +1,40 @@
 <link
-      rel="stylesheet"
-      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
-    />
+  rel="stylesheet"
+  href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+/>
 
-    <script
-      src="https://kit.fontawesome.com/1bcd2404f3.js"
-      crossorigin="anonymous"
-    ></script>
+<script
+  src="https://kit.fontawesome.com/1bcd2404f3.js"
+  crossorigin="anonymous"
+></script>
 <br />
 <nav class="container">
   <ul>
-    <li><a href="/projects"><strong>Final Year Major Project Database</strong></a></li>
+    <li>
+      <a href="/projects"><strong>Final Year Major Project Database</strong></a>
+    </li>
   </ul>
   <ul>
     <!-- <li><a href="#">Other link</a></li>
         <li><a href="#">Link</a></li> -->
-        
+
     <% if(!currentUser){%>
-   <li><Button onclick="openAboutModal()">Log in</Button></li>
+    <li><Button onclick="openAboutModal()">Log in</Button></li>
     <% }else{%>
     <li>Signed In as: <%= currentUser.username%></li>
     <li></li>
     <li><a href="/logout" role="button">Log out</a></li>
     <%}%>
-    
   </ul>
 </nav>
 
 <div class="container">
-  <%if(error && error.length > 0){ %>
-    <div class='alert alert-danger' role="alert">
-      <%=error %>
-    </div>
-  <% } %>
+  <%if(error && error.length > 0){%>
+  <div class="alert alert-danger" role="alert"><%=error %></div>
+  <% <% let alert = document.querySelector('.alert-danger') %> <%
+  document.setTimeout(()=>{alert.classList.add('hidden')}, 1000) %> <%} %>
   <%if(success && success.length > 0){ %>
-    <div class='alert alert-success' role="alert">
-      <%=success%>
-    </div>
+  <div class="alert alert-success" role="alert"><%=success%></div>
   <% } %>
 </div>
 
@@ -52,6 +50,11 @@
       ></a>
       Log In
     </header>
+    <% if(error && error.length > 0) { %>
+    <div class="alert alert-danger" role="alert">
+      <div class="container"><%= error %></div>
+    </div>
+    <% } %>
     <form action="/login" method="post">
       <div class="formcontainer">
         <input
@@ -80,13 +83,12 @@
   </article>
 </dialog>
 
-
 <script>
   let modal = document.querySelector("#about-modal");
   let isModalOpen = false;
   document.addEventListener("keydown", (e) => {
-    console.log(e.key,isModalOpen);
-    if ( e.key == "Escape" && isModalOpen) closeAboutModal();
+    console.log(e.key, isModalOpen);
+    if (e.key == "Escape" && isModalOpen) closeAboutModal();
   });
   function closeAboutModal() {
     isModalOpen = false;
@@ -106,8 +108,18 @@
 </script>
 
 <style>
-  strong{
+  strong {
     font-size: 1.5rem;
   }
+  .alert {
+    padding: 20px;
+    color: white;
+    margin-bottom: 15px;
+  }
+  .alert-danger {
+    background-color: #ee5348; /* Red */
+  }
+  .hidden {
+    display: hidden;
+  }
 </style>
-

@@ -1,57 +1,59 @@
-const express = require('express');
-var router = express.Router()
-const passport = require('passport');
-const User = require('../models/user');
+const express = require("express");
+var router = express.Router();
+const passport = require("passport");
+const User = require("../models/user");
 
 // ROot
-router.get('/',function(req,res) {
-  res.redirect('/projects')
-})
+router.get("/", function (req, res) {
+  res.redirect("/projects");
+});
 
 // Show Register Form
-router.get('/register',function (req,res) {
-  res.render('register')
-})
+router.get("/register", function (req, res) {
+  res.render("register");
+});
 
 // Handles Sign up i.e. Register
-router.post('/register',function(req,res){
-  var newUser = new User({username:req.body.username})
-  User.register(newUser,req.body.password,function(err,user){
-    if(err){
+router.post("/register", function (req, res) {
+  var newUser = new User({ username: req.body.username });
+  User.register(newUser, req.body.password, function (err, user) {
+    if (err) {
       console.log(err);
-      res.render('register',{error:err.message})
+      res.render("register", { error: err.message });
+    } else {
+      passport.authenticate("local")(req, res, function () {
+        req.flash("success", "welcome to YelpCamp " + user.username);
+        res.redirect("/projects");
+      });
     }
-    else{
-      passport.authenticate('local')(req,res,function(){
-        req.flash("success","welcome to YelpCamp "+user.username)
-        res.redirect('/projects')
-      })
-    }
-  })
-})
+  });
+});
 
 // Show Login Form
-router.get('/login',function (req,res) {
-  res.render('login')
-})
+router.get("/login", function (req, res) {
+  res.render("login");
+});
 
-// HAndle Login
-router.post('/login',passport.authenticate('local',
-  {
+// Handle Login
+router.post(
+  "/login",
+  passport.authenticate("local", {
     // successRedirect:'/projects',
-    failureRedirect:'/login',
+    failureRedirect: "/projects",
     failureFlash: true,
     // successFlash:"Logged in succesfully"
-  }),function (req,res) {
-    req.flash('success',"logged in Successfully as : " + req.user.username)
-    res.redirect('/projects')
-})
+  }),
+  function (req, res) {
+    req.flash("success", "Logged In");
+    res.redirect("/projects");
+  }
+);
 
 // Handle Logout
-router.get('/logout',function (req,res) {
-  req.flash('success',"Logged You Out")
-  req.logout()
-  res.redirect('/projects')
-})
+router.get("/logout", function (req, res) {
+  req.flash("success", "Logged Out");
+  req.logout();
+  res.redirect("/projects");
+});
 
-module.exports = router
+module.exports = router;
