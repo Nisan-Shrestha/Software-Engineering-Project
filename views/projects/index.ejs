@@ -22,7 +22,8 @@
     ></script>
   </head>
   <body data-theme="dark">
-    <%- include('../partials/header'); -%> <%if(error && error.length > 0){ %>
+    <%- include('../partials/header'); -%> 
+    <%if(error && error.length > 0){ %>
     <% console.log(error[0]) %> <% } %> <%if(success && success.length > 0){ %>
     <% console.log(success[0])%> <% } %> <% if(!currentUser){%>
     <div class="" gridlayout2></div>
@@ -134,9 +135,9 @@
 <script>
   let modal = document.querySelector("#about-modal");
   let isModalOpen = false;
-  document.addEventListener("keypress", (e) => {
-    console.log(e.key);
-    if (isModalOpen && e.key == "Escape") closeAboutModal();
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key,isModalOpen);
+    if ( e.key == "Escape" && isModalOpen) closeAboutModal();
   });
   function closeAboutModal() {
     isModalOpen = false;

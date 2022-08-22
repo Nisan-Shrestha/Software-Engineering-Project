@@ -6,28 +6,29 @@
     </head>
 <body>
     
-        <div class="navbar">
+        <!-- <div class="navbar">
             <div class="heading">Final Year Major Project Database</div>
             <% if(!currentUser){%>
             <% }else{%>
              <div class="signedInfo"> Signed In as: <%= currentUser.username%> </div>
             <%}%>
-        </div>
+        </div> -->
+        <%- include('../partials/header'); -%> 
         
-            <div class="project"> 
-            <div class="titlebar">
-                <div class="pjName"><hr/><%= project.title %><hr/></div>
-                
-
+            <article class="project "> 
+            <header>
+              <div class="grid">
+                <div class="pjName"><strong><%= project.title %></strong></div>
                   <% if(currentUser  && project.author.filter(e => e.id.equals(currentUser._id)).length > 0 ){%>
-                    <a href="/projects/<%= project._id %>/edit"><Button class="editButton">Edit</Button></a> 
+                    <a href="/projects/<%= project._id %>/edit" role="button">Edit</a> 
                     <form action="/projects/<%= project._id %>?_method=DELETE" method="post">
                         <Button class="deleteButton">Delete</Button>
                     </form>
                   <% }%>
-
                 <div class="status">Approved</div>
-            </div>
+              </div>
+            </header>
+          </br>
             <div class="content">Authors:<%= project.authors %></div>
             <div class="content">Supervisor:<%= project.supervisor %></div>
             <div class="content">Year:<%= project.year %></div>
@@ -36,162 +37,10 @@
                 <div>
                   <%= project.abstract %>
                 </div>
-            </div>   
+            </div>  
+            </article>
         
         
 </body>
 </html> <br/><br/>
 
-<style>
-    *{
-        box-sizing: border-box;
-    }
-    body {
-        font-size: 14px;
-        background: rgba(224,224,224,1);
-
-      }
-    button{
-        border: none;
-        padding: 16px 32px;
-        margin: 5px;
-        text-align: center;
-        font-family: Inter;
-        font-size: 20px;
-       border-radius: 25PX;
-      }
-
-      .titlebar{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .signedInfo{
-        font-size: 20px;
-        font-family: Inter;
-      }
-
-      .pjName{
-        font-family: Inter;
-        font-size: 40px;
-        flex-grow: 3;
-        align-self: center;
-        text-align: center;
-      }
-      .editButton{
-        flex-grow: 1;
-        align-self: center;
-
-      }
-      .deleteButton{
-        flex-grow: 1;
-        align-self: center;
-      }
-      .status{
-        flex-grow: 1;
-        text-align: center;
-        align-self:center;
-        font-family: Inter;
-        font-size: 20px;
-        background: rgba(224,224,224,1);
-        border-radius: 25px;;
-      }
-      .content{
-        font-family: Inter;
-        font-size: 20px;
-        padding: 10px;
-      }
-
-    .navbar {
-        background: rgba(255,255,255,1);
-        border: 3px solid rgba(0,0,0,1);
-        overflow: hidden;
-        font-family: Inter;
-        font-size: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items:center;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-    .container{
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        margin-top: 10px;
-        margin-bottom:10px
-    }
-    .searchbar{
-        width:50%;
-        background-color: white;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        border-radius: 25px;
-        padding: 10px;
-        overflow: hidden;;
-    }
-    .searchbar input{
-        background: transparent;
-        flex:1;
-        border:0;
-        outline: none;
-        padding: 24px 20px;
-        font-size: 20px;
-        font-family: Inter;
-        align-self:center ;
-    }
-    .options{
-        background: white;
-        border: 0;
-        outline: 0;
-        margin-left: 10px;
-        padding: 24px 20px;
-        font-size: 20px;
-        font-family: Inter;
-        border-radius: 25px;
-        align-self:center ;
-    }
-    .projectlist{
-        background-color: white;
-        height:100%;
-        width:100%;
-        border-radius: 25px;
-        padding: 10px;
-    }
-    .project{
-        background-color: white;
-        border: 3px solid rgba(0,0,0,1);
-        border-radius: 25px;
-        padding: 10px;
-        margin: 10px;
-    }
-    .projectName{
-        grid-area: Project-name;
-        font-size: 30px;
-        font-family: Inter;
-    }
-    .projectAuthor{
-        grid-area: Project-Author;
-        font-size: 20px;
-        font-family: Inter;
-    }
-    .supervisor{
-        grid-area: Supervisor; 
-        font-size: 20px;
-        font-family: Inter;
-    }
-    .moreinfo{
-        grid-area: Button; 
-        position: relative;
-        width:50%;
-        left: 25%;
-    
-    }
-
-
-</style>
