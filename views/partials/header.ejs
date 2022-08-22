@@ -27,6 +27,19 @@
   </ul>
 </nav>
 
+<div class="container">
+  <%if(error && error.length > 0){ %>
+    <div class='alert alert-danger' role="alert">
+      <%=error %>
+    </div>
+  <% } %>
+  <%if(success && success.length > 0){ %>
+    <div class='alert alert-success' role="alert">
+      <%=success%>
+    </div>
+  <% } %>
+</div>
+
 <!-- Login Modal -->
 <dialog id="about-modal">
   <article>
@@ -91,4 +104,10 @@
     modal.setAttribute("open", "true");
   }
 </script>
+
+<style>
+  strong{
+    font-size: 1.5rem;
+  }
+</style>
 
