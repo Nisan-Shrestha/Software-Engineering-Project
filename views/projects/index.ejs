@@ -1,257 +1,156 @@
-<!-- <%- include('../partials/header'); -%>
-
-<div class="container">
-  <header class="jumbotron">
-    <div class="container">
-      <h1>The Grounds</h1>
-      <p>View our Hand-Picked Grounds from around the world</p>
-      <p>
-        <a class="btn btn-primary btn-lg" href="/projects/new">Add New Project</a>
-      </p>
-    </div>
-  </header>
-    
-  <div class="row" >
-    <h3>Our Most Popular Sites</h3>
-    <div class="col-lg-12 text-center" style="display:flex; flex-wrap:wrap;">
-      <%  projects.forEach(function(project){%>
-        <div class="col-md-3 col-sm-6">
-          <div class="thumbnail">
-            <img src="<%= project.image %>" alt="">
-            <div class="caption ">
-              <h4 class=""><%= project.name %> </h4>
-            </div>
-            <p>
-              <a href="/projects/<%= project._id%>" class="btn btn-primary">More info</a>
-            </p>
-          </div>
-        </div>
-      <% }) %>
-    </div>
-  </div>
-</div>
-
-<%- include('../partials/footer'); -%> -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
-    </head>
-<body>
-    
-        <div class="navbar">
-            <div class="heading">Final Year Major Project Database</div>
-             <% if(!currentUser){%>
-            <a href="/login"><Button>Log in</Button></a>
-          <% }else{%>
-           <div class="signedInfo"> Signed In as: <%= currentUser.username%> </div>
-            <a href="/logout"><Button>Log out</Button></a>
-          <%}%>
-        </div>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+      type="text/javascript"
+      async
+    ></script>
 
-        
-          <%if(error && error.length > 0){ %>
-              <% console.log(error[0]) %>
-            
-          <% } %>
-          <%if(success && success.length > 0){ %>
-              <% console.log(success[0])%>
-            
-          <% } %>
-      
-      
-        <% if(!currentUser){%>
-          <div class=""gridlayout2></div>
-          <% }else{%>
-            <div class="gridlayout"> 
-           <div class="functionality">
-            <a href="/projects/new"><Button>New Project</Button></a>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
+
+    <script
+      src="https://kit.fontawesome.com/1bcd2404f3.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body data-theme="dark">
+    <%- include('../partials/header'); -%> <%if(error && error.length > 0){ %>
+    <% console.log(error[0]) %> <% } %> <%if(success && success.length > 0){ %>
+    <% console.log(success[0])%> <% } %> <% if(!currentUser){%>
+    <div class="" gridlayout2></div>
+    <% }else{%>
+    <div class="gridlayout">
+      <div class="functionality">
+        <a href="/projects/new"><Button>New Project</Button></a>
+      </div>
+      <%}%>
+
+      <!-- Searchbar -->
+      <br />
+      <div class="container">
+        <div>
+          <form class="searchbar grid" action="/projects/search" method="get">
+            <input type="text" name="dsearch" placeholder="Search" />
+            <Button type="submit"
+              ><i class="fa-solid fa-magnifying-glass"></i
+            ></Button>
+          </form>
+          <select class="options" name="options">
+            <option value="name">Search by Project Name</option>
+            <!-- <option value="author">Search by Project Author</option> -->
+            <option value="supervisor">Search by Supervisor</option>
+          </select>
         </div>
-          <%}%>
-          
-            <div class="container">
-                <form class="searchbar" action="/projects/search" method="get">
-                    <input  type="text" name="dsearch" placeholder="Search">
-                    <Button  type="submit">S</Button>
-                </form>
-                <select class="options" name="options">
-                    <option value="name">Search by Project Name</option>
-                    <!-- <option value="author">Search by Project Author</option> -->
-                    <option value="supervisor">Search by Supervisor </option>
-                </select>
-            </div>
+        <div></div>
+      </div>
+    </div>
+    <br />
+
+    <div class="projectlist container">
+      <h1>Project List</h1>
+
+      <% projects.forEach(function(project){%>
+
+      <article class="project">
+        <header class="projectName">
+          <strong><%= project.title %></strong>
+        </header>
+        <div class="description">
+          Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
+          'No abstract available!' %>
         </div>
-        <div class="projectlist">
-          <%  projects.forEach(function(project){%>
-          
-            <div class="project"> 
-              <div class="projectName">Project Name: <%= project.title %> </div>
-              <div class="projectAuthor"> Authors: <%= project.authors %></div>
-              <div class="supervisor"> Supervisor: <%=project.supervisor%> </div>
-              <a href="/projects/<%= project._id%>"><Button class="moreinfo"> More info</Button></a>
-            </div> 
-          <% }) %>
+        <div class="projectAuthor">Authors: <%= project.authors %></div>
+        <div class="supervisor">Supervisor: <%=project.supervisor%></div>
+        <br />
+        <div class="grid">
+          <!-- Extra grids for spacing -->
+          <div></div>
+          <div></div>
+          <a href="/projects/<%= project._id%>" role="button">More info</a>
+          <div></div>
+          <div></div>
         </div>
-      
-</body>
-</html> <br/><br/>
+      </article>
+      <% }) %>
+    </div>
+
+    <!-- Login Modal -->
+    <dialog id="about-modal">
+      <article>
+        <header>
+          <a
+            href="#close"
+            aria-label="Close"
+            class="close"
+            onclick="closeAboutModal()"
+          ></a>
+          Log In
+        </header>
+        <form action="/login" method="post">
+          <div class="formcontainer">
+            <input
+              class="emaildesign"
+              type="text"
+              name="username"
+              placeholder="Username"
+            />
+            <input
+              class="passworddesign"
+              type="password"
+              name="password"
+              placeholder="Password"
+            />
+            <Button
+              class="loginbutton"
+              type="submit"
+              value="login"
+              action="/login"
+              method="post"
+              >Login</Button
+            >
+          </div>
+          <hr />
+        </form>
+      </article>
+    </dialog>
+  </body>
+</html>
+<br /><br />
 
 <style>
-    *{
-        box-sizing: border-box;
-    }
-    body {
-        font-size: 14px;
-        background: rgba(224,224,224,1);
-
-      }
-    button{
-        border: none;
-        padding: 16px 32px;
-        margin: 5px;
-        text-align: center;
-        font-family: Inter;
-        font-size: 20px;
-       border-radius: 25PX;
-      }
-     
-    .signedInfo{
-      font-family: Inter;
-        font-size: 20px;
-    }
-
-    .navbar {
-        background: rgba(255,255,255,1);
-        border: 3px solid rgba(0,0,0,1);
-        overflow: hidden;
-        font-family: Inter;
-        font-size: 40px;
-        display: flex;
-        justify-content: space-between;
-        align-items:center;
-        padding-left: 10px;
-        padding-right: 10px;
-      }
-
-    .container{
-        grid-area: Search;
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        margin:5px;
-        margin-top:10px;
-        margin-bottom: 10px;
-    }
-    .searchbar{
-        width:auto;
-        background-color: white;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        border-radius: 25px;
-        padding: 10px;
-        overflow: hidden;;
-    }
-    .searchbar input{
-        background: transparent;
-        flex:1;
-        border:0;
-        outline: none;
-        padding: 24px 20px;
-        font-size: 20px;
-        font-family: Inter;
-        align-self:center ;
-    }
-    .options{
-        background: white;
-        border: 0;
-        outline: 0;
-        margin-left: 10px;
-        padding: 24px 20px;
-        font-size: 20px;
-        font-family: Inter;
-        border-radius: 25px;
-        align-self:center ;
-    }
-    .projectlist{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        background-color: white;
-        height:auto;
-        width:auto;
-        margin:5px;
-        border-radius: 25px;
-        padding: 10px;
-
-    }
-    .gridlayout{
-        display: grid;
-        grid-template-columns: 0.5fr 1.5fr 1fr;
-        gap: 0px 0px;
-        grid-auto-flow: row;
-        grid-template-areas:
-        "Function Search Search";
-    }
-    .gridlayout2{
-        display: grid;
-        grid-template-columns: 0.5fr 1.5fr 1fr;
-        gap: 0px 0px;
-        grid-auto-flow: row;
-        grid-template-areas:
-        "Search Search Search";
-    }
-    .functionality{
-        background-color: white;
-        grid-area:Function;
-        display:flex;
-        flex-direction: column;
-        margin:5px;
-        margin-top: 10px;
-        justify-content: center;
-        align-items: center;
-        border-radius: 25px;
-    }
-    .project{
-        border: 3px solid rgba(0,0,0,1);
-        border-radius: 25px;
-        padding: 10px;
-        margin: 10px;
-        display:grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        gap: 0px 0px;
-        grid-auto-flow: row;
-        grid-template-areas:
-            "Project-name Project-name ."
-            "Project-Author Project-Author Button"
-            "Supervisor Supervisor .";
-    }
-    .projectName{
-        grid-area: Project-name;
-        font-size: 30px;
-        font-family: Inter;
-    }
-    .projectAuthor{
-        grid-area: Project-Author;
-        font-size: 20px;
-        font-family: Inter;
-    }
-    .supervisor{
-        grid-area: Supervisor; 
-        font-size: 20px;
-        font-family: Inter;
-    }
-    .moreinfo{
-        grid-area: Button; 
-        position: relative;
-        width:50%;
-        left: 25%;
-    }
+  .projectName {
+    font-size: 1.4rem;
+  }
 </style>
 
-  
-
-
+<script>
+  let modal = document.querySelector("#about-modal");
+  let isModalOpen = false;
+  document.addEventListener("keypress", (e) => {
+    console.log(e.key);
+    if (isModalOpen && e.key == "Escape") closeAboutModal();
+  });
+  function closeAboutModal() {
+    isModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+    setTimeout(() => {
+      modal.removeAttribute("open");
+      document.querySelector("html").classList.remove("modal-is-closing");
+    }, 400);
+  }
+  function openAboutModal() {
+    console.log(`opening`);
+    isModalOpen = true;
+    document.querySelector("html").classList.add("modal-is-open");
+    modal.setAttribute("open", "true");
+  }
+</script>
