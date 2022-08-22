@@ -14,11 +14,10 @@
             <%}%>
         </div> -->
         <%- include('../partials/header'); -%> 
-        
-            <article class="project "> 
+          <div class="container">
+            <article class="project"> 
             <header>
-              <div class="grid">
-                <div class="pjName"><strong><%= project.title %></strong></div>
+                <div><h2><%= project.title %></h2></div>
                   <% if(currentUser  && project.author.filter(e => e.id.equals(currentUser._id)).length > 0 ){%>
                     <a href="/projects/<%= project._id %>/edit" role="button">Edit</a> 
                     <form action="/projects/<%= project._id %>?_method=DELETE" method="post">
@@ -26,20 +25,18 @@
                     </form>
                   <% }%>
                 <div class="status">Approved</div>
-              </div>
             </header>
-          </br>
-            <div><strong>Authors:</strong><%= project.authors %></div>
-            <div><strong>Supervisor:</strong><%= project.supervisor %></div>
-            <div><strong>Year:</strong><%= project.year %></div>
-            <div><strong>Link:</strong><%= project.link%></div>
-            <div><strong>Abstract</strong>
+            <div><strong>Authors: </strong><%= project.authors %></div>
+            <div><strong>Supervisor: </strong><%= project.supervisor %></div>
+            <div><strong>Year: </strong><%= project.year %></div>
+            <div><strong>Link: </strong><%= project.link%></div>
+            <div><strong>Abstract: </strong>
                 <div>
                   <%= project.abstract %>
                 </div>
             </div>  
             </article>
-        
+          </div>
         
 </body>
 </html> <br/><br/>

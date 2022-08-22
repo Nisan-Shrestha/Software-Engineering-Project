@@ -10,17 +10,85 @@
 <br />
 <nav class="container">
   <ul>
-    <li><strong>Final Year Major Project Database</strong></li>
+    <li><a href="/projects"><strong>Final Year Major Project Database</strong></a></li>
   </ul>
   <ul>
     <!-- <li><a href="#">Other link</a></li>
         <li><a href="#">Link</a></li> -->
+        
     <% if(!currentUser){%>
-    <Button onclick="openAboutModal()">Log in</Button>
+   <li><Button onclick="openAboutModal()">Log in</Button></li>
     <% }else{%>
-    <div>Signed In as: <%= currentUser.username%></div>
-    <a href="/logout"><Button>Log out</Button></a>
+    <li>Signed In as: <%= currentUser.username%></li>
+    <li></li>
+    <li><a href="/logout" role="button">Log out</a></li>
     <%}%>
+    
   </ul>
 </nav>
+
+<!-- Login Modal -->
+<dialog id="about-modal">
+  <article>
+    <header>
+      <a
+        href="#close"
+        aria-label="Close"
+        class="close"
+        onclick="closeAboutModal()"
+      ></a>
+      Log In
+    </header>
+    <form action="/login" method="post">
+      <div class="formcontainer">
+        <input
+          class="emaildesign"
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+        <input
+          class="passworddesign"
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
+        <Button
+          class="loginbutton"
+          type="submit"
+          value="login"
+          action="/login"
+          method="post"
+          >Login</Button
+        >
+      </div>
+      <hr />
+    </form>
+  </article>
+</dialog>
+
+
+<script>
+  let modal = document.querySelector("#about-modal");
+  let isModalOpen = false;
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key,isModalOpen);
+    if ( e.key == "Escape" && isModalOpen) closeAboutModal();
+  });
+  function closeAboutModal() {
+    isModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+    setTimeout(() => {
+      modal.removeAttribute("open");
+      document.querySelector("html").classList.remove("modal-is-closing");
+    }, 400);
+  }
+  function openAboutModal() {
+    console.log(`opening`);
+    isModalOpen = true;
+    document.querySelector("html").classList.add("modal-is-open");
+    modal.setAttribute("open", "true");
+  }
+</script>
 

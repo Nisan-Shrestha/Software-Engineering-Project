@@ -25,14 +25,9 @@
     <%- include('../partials/header'); -%> 
     <%if(error && error.length > 0){ %>
     <% console.log(error[0]) %> <% } %> <%if(success && success.length > 0){ %>
-    <% console.log(success[0])%> <% } %> <% if(!currentUser){%>
-    <div class="" gridlayout2></div>
-    <% }else{%>
-    <div class="gridlayout">
-      <div class="functionality">
-        <a href="/projects/new"><Button>New Project</Button></a>
-      </div>
-      <%}%>
+    <% console.log(success[0])%> <% } %>
+    
+    
 
       <!-- Searchbar -->
       <br />
@@ -57,6 +52,10 @@
 
     <div class="projectlist container">
       <h1>Project List</h1>
+
+      <% if(currentUser){%>
+          <a href="/projects/new" role="button">New Project</a>
+          <%}%>
 
       <% projects.forEach(function(project){%>
 
@@ -83,45 +82,7 @@
       <% }) %>
     </div>
 
-    <!-- Login Modal -->
-    <dialog id="about-modal">
-      <article>
-        <header>
-          <a
-            href="#close"
-            aria-label="Close"
-            class="close"
-            onclick="closeAboutModal()"
-          ></a>
-          Log In
-        </header>
-        <form action="/login" method="post">
-          <div class="formcontainer">
-            <input
-              class="emaildesign"
-              type="text"
-              name="username"
-              placeholder="Username"
-            />
-            <input
-              class="passworddesign"
-              type="password"
-              name="password"
-              placeholder="Password"
-            />
-            <Button
-              class="loginbutton"
-              type="submit"
-              value="login"
-              action="/login"
-              method="post"
-              >Login</Button
-            >
-          </div>
-          <hr />
-        </form>
-      </article>
-    </dialog>
+    
   </body>
 </html>
 <br /><br />
@@ -132,26 +93,4 @@
   }
 </style>
 
-<script>
-  let modal = document.querySelector("#about-modal");
-  let isModalOpen = false;
-  document.addEventListener("keydown", (e) => {
-    console.log(e.key,isModalOpen);
-    if ( e.key == "Escape" && isModalOpen) closeAboutModal();
-  });
-  function closeAboutModal() {
-    isModalOpen = false;
-    document.querySelector("html").classList.remove("modal-is-open");
-    document.querySelector("html").classList.add("modal-is-closing");
-    setTimeout(() => {
-      modal.removeAttribute("open");
-      document.querySelector("html").classList.remove("modal-is-closing");
-    }, 400);
-  }
-  function openAboutModal() {
-    console.log(`opening`);
-    isModalOpen = true;
-    document.querySelector("html").classList.add("modal-is-open");
-    modal.setAttribute("open", "true");
-  }
-</script>
+
