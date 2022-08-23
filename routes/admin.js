@@ -49,9 +49,10 @@ router.post('/upload-csv', upload.single('file'), function (req, res) {
         })
         .on("end", function () {
             console.log(fileRows) //contains array of arrays. Each inner array represents row of the csv file, with each element of it a column
-            pending = fileRows.length-1; //check no of rows being processed
+            pending = fileRows.length; //check no of rows being processed
             fileRows.forEach(row => {
                 if (row[0].toLowerCase() == "username") {
+                    pending = pending -1;
                     return;
                 } else {
                     var UserName = row[0];
