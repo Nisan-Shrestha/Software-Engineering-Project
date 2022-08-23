@@ -92,14 +92,12 @@ router.post("/register", function (req, res) {
     });
 });
 
-router.put("/:id",middleware.checkProjectOwnership,function (req,res) {
+router.put("/:id",function (req,res) {
     Project.findByIdAndUpdate(req.params.id,req.body.project,function (err,updatedproject) {
       if(err){
         res.redirect('/admin')
       }
-      else{
-        res.redirect('/admin/'+req.params.id)
-      }
+      
     })
   })
 

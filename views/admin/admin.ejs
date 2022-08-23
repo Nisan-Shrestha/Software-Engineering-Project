@@ -29,7 +29,14 @@
     
     
 
-      <!-- Searchbar -->
+    <form class = "container"action="/admin/upload-csv" method="POST"  enctype="multipart/form-data">
+      <h4 class="heading">Upload a CSV File with username and pw</h4>
+      <div class="grid">
+      <input type="file" name="file" placeholder="CSV - File" accept=".csv">
+      <input type="submit" value='Upload'>
+      </div>
+      <!-- <button class="formbutton"> Submit</button> -->
+    </form>
       
 
     <div class="projectlist container">
