@@ -57,29 +57,31 @@
           <a href="/projects/new" role="button">New Project</a>
           <%}%>
 
+      <% if(projects.length === 0){%>
+        <article aria-busy="true"></article>
+      <% }else{ %>
       <% projects.forEach(function(project){%>
-
-      <article class="project">
-        <header class="projectName">
-          <strong><%= project.title %></strong>
-        </header>
-        <div class="description">
-          Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
-          'No abstract available!' %>
-        </div>
-        <div class="projectAuthor">Authors: <%= project.authors %></div>
-        <div class="supervisor">Supervisor: <%=project.supervisor%></div>
-        <br />
-        <div class="grid">
-          <!-- Extra grids for spacing -->
-          <div></div>
-          <div></div>
-          <a href="/projects/<%= project._id%>" role="button">More info</a>
-          <div></div>
-          <div></div>
-        </div>
-      </article>
-      <% }) %>
+        <article class="project">
+          <header class="projectName">
+            <strong><%= project.title %></strong>
+          </header>
+          <div class="description">
+            Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
+            'No abstract available!' %>
+          </div>
+          <div class="projectAuthor">Authors: <%= project.authors %></div>
+          <div class="supervisor">Supervisor: <%=project.supervisor%></div>
+          <br />
+          <div class="grid">
+            <!-- Extra grids for spacing -->
+            <div></div>
+            <div></div>
+            <a href="/projects/<%= project._id%>" role="button">More info</a>
+            <div></div>
+            <div></div>
+          </div>
+        </article>
+      <% })} %>
     </div>
 
     

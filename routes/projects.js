@@ -31,9 +31,10 @@ router.post('/',middleware.isLoggedIn,function (req,res) {
     id : req.user._id,
     username : req.user.username
   } 
-  var reviewStatus = req.body.review
+  var reviewStatus = false
+  var abstract = req.body.abstract
   
-  var newProject = { title :title  , image :image, description :description, author:author,authors:authors, year:year, link:link, supervisor:supervisor,reviewStatus:reviewStatus}
+  var newProject = { title :title  , image :image, description :description, author:author,authors:authors, year:year, link:link, supervisor:supervisor,reviewStatus:reviewStatus, abstract:abstract}
   
   Project.create(newProject,function (err,newProj) {
     if (err) {
@@ -101,7 +102,7 @@ router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
     if (err) {
       res.redirect('/projects/'+req.params.id)
     }
-    res.redirect('projects/show')
+    res.redirect('/projects')
   })
 })
 

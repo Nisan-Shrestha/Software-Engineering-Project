@@ -18,13 +18,23 @@
             <article class="project"> 
             <header>
                 <div><h2><%= project.title %></h2></div>
+                <div class="grid">
                   <% if(currentUser  && project.author.filter(e => e.id.equals(currentUser._id)).length > 0 ){%>
-                    <a href="/projects/<%= project._id %>/edit" role="button">Edit</a> 
-                    <form action="/projects/<%= project._id %>?_method=DELETE" method="post">
-                        <Button class="deleteButton">Delete</Button>
-                    </form>
-                  <% }%>
-                <div class="status">Approved</div>
+
+                      <a href="/projects/<%= project._id %>/edit" ><Button>Edit</Button></a> 
+                      <form action="/projects/<%= project._id %>?_method=DELETE" method="post">
+                          <Button class="deleteButton">Delete</Button>
+                      </form>
+                      <div></div>
+                    <% } %>
+                        <div class="status">
+                          <% if(project.reviewStatus){%>
+                          <h4>Approved</h4>
+                          <% }else{ %>
+                          <h4>Pending</h4>
+                          <%}%>
+                        </div>
+                    </div>
             </header>
             <div><strong>Authors: </strong><%= project.authors %></div>
             <div><strong>Supervisor: </strong><%= project.supervisor %></div>
