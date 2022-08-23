@@ -19,7 +19,7 @@ router.post("/register", function (req, res) {
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
-      res.render("register", { error: err.message });x
+      res.render("register", { error: err.message });
     } else {
       passport.authenticate("local")(req, res, function () {
         req.flash("success", "Welcome " + user.username +"!!!");

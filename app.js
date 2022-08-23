@@ -1,3 +1,4 @@
+//requrie various node modules
 const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
@@ -8,15 +9,20 @@ const express = require("express"),
   methodOverride = require("method-override"),
   Project = require("./models/project"),
   Campground = require("./models/campground"),
-  Comment = require("./models/comment");
+  Comment = require("./models/comment"),
+  http = require('http'),
+  fs = require('fs'),
+  multer = require('multer'),
+  csv = require('fast-csv');;
+const cors = require("cors"); 
+
+app.use(cors());
 User = require("./models/user");
-seedDB = require("./seeds");
+seedDB = require("./seeds"); //idr what this does
 
-const commentRoutes = require("./routes/comments");
-const campgroundRoutes = require("./routes/campgrounds");
-const projectRoutes = require("./routes/projects");
-const indexRoutes = require("./routes/index");
 
+
+//setting up mongo
 const MongoClient = require("mongodb").MongoClient;
 
 const uri =
@@ -38,6 +44,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.use(flash());
+app.use(cors());
 // seedDB();
 
 // Passport setup ====================
@@ -50,11 +57,13 @@ app.use(
   })
 );
 
+//initialize authorization and session management with passport.js service 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 
 app.use(function (req, res, next) {
   res.locals.currentUser = req.user;
@@ -63,12 +72,27 @@ app.use(function (req, res, next) {
   next();
 });
 
+
+
+
+
+//loading routes (url to req,res  handler) scripts
+const commentRoutes = require("./routes/comments");
+const campgroundRoutes = require("./routes/campgrounds");
+const projectRoutes = require("./routes/projects");
+const indexRoutes = require("./routes/index");
+const adminRoutes = require("./routes/admin");
+
 // Routes ======================
 app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/projects", projectRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/projects/:id/comments", commentRoutes);
+app.use("/admin", adminRoutes);
+
+
+
 const port = process.env.PORT || 3000;
 app.listen(port, process.env.IP, function () {
   console.log("serving Local @ 3000");
