@@ -3,23 +3,23 @@ var router = express.Router();
 const Project = require('../models/project');
 const Comment = require('../models/comment');
 const middleware = require('../middleware/index1');
-router.get('/',function(req,res){
-  Project.find({},function(err,allProjects){
+router.get('/', function (req, res) {
+  Project.find({}, function (err, allProjects) {
     if (err) {
       console.log(err);
     }
-    else{
-      res.render('projects/index', {projects:allProjects})
+    else {
+      res.render('projects/index', { projects: allProjects })
     }
   })
 })
 
-router.get('/new',middleware.isLoggedIn,function(req,res){
+router.get('/new', middleware.isLoggedIn, function (req, res) {
   res.render('projects/new')
 })
 
 //Add project
-router.post('/',middleware.isLoggedIn,function (req,res) {
+router.post('/', middleware.isLoggedIn, function (req, res) {
   var title = req.body.title
   var year = req.body.year
   var description = req.body.description
@@ -28,19 +28,19 @@ router.post('/',middleware.isLoggedIn,function (req,res) {
   var supervisor = req.body.supervisor
   var authors = req.body.authors
   var author = {
-    id : req.user._id,
-    username : req.user.username
-  } 
+    id: req.user._id,
+    username: req.user.username
+  }
   var reviewStatus = false
   var abstract = req.body.abstract
-  
-  var newProject = { title :title  , image :image, description :description, author:author,authors:authors, year:year, link:link, supervisor:supervisor,reviewStatus:reviewStatus, abstract:abstract}
-  
-  Project.create(newProject,function (err,newProj) {
+
+  var newProject = { title: title, image: image, description: description, author: author, authors: authors, year: year, link: link, supervisor: supervisor, reviewStatus: reviewStatus, abstract: abstract }
+
+  Project.create(newProject, function (err, newProj) {
     if (err) {
-      console.log("error",err);
+      console.log("error", err);
     }
-    else{
+    else {
       res.redirect('/projects')
     }
   })
@@ -48,81 +48,82 @@ router.post('/',middleware.isLoggedIn,function (req,res) {
 
 
 //my project
-router.get('/myprojects/:id',middleware.isLoggedIn,(req,res)=>{ 
-  try {  
-    Project.author.map(project=>{
-      project.find({$or:[{id:{'$regex':req.params.id}}]},(err,data)=>{  
-        if(err){  
-          console.log(err); 
-        }else{  
-          res.render('projects/index',{projects:data});  
-        }  
-        })  
+router.get('/myprojects/:id', middleware.isLoggedIn, (req, res) => {
+  console.log("hello")
+  try {
+    Project.find({"author.id":req.params.id }, function (err, allProjects) {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        res.render('projects/index', { projects: allProjects })
+      }
     })
-  } catch (error) {  
-    console.log(error); 
-  }  
-  }); 
+   
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 
 //search
-router.get('/search',(req,res)=>{ 
-  try {  
-    Project.find({$or:[{title:{'$regex':req.query.dsearch}},{supervisor:{'$regex':req.query.dsearch}}]},(err,data)=>{  
-    if(err){  
-      console.log(err);  
-    }else{  
-      res.render('projects/index',{projects:data});  
-    }  
-    })  
-  } catch (error) {  
-    console.log(error);  
-  }  
-  }); 
+router.get('/search', (req, res) => {
+  try {
+    Project.find({ $or: [{ title: { '$regex': req.query.dsearch } }, { supervisor: { '$regex': req.query.dsearch } }] }, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.render('projects/index', { projects: data });
+      }
+    })
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-  router.get('/:id',function(req,res){
-    Project.findById(req.params.id).populate('comments').exec(function(err,foundGround){
-      if(err){
-        console.log("ERRORORORORO:",err);
-      }
-      else{
-        res.render('projects/show',{project:foundGround})
-      }
-      })
+router.get('/:id', function (req, res) {
+  Project.findById(req.params.id).populate('comments').exec(function (err, foundGround) {
+    if (err) {
+      console.log("ERRORORORORO:", err);
+    }
+    else {
+      res.render('projects/show', { project: foundGround })
+    }
   })
+})
 
 // edit route
-router.get('/:id/edit',middleware.checkProjectOwnership,function (req,res) {
-  Project.findById(req.params.id,function (err,foundProject) {
-      res.render("projects/edit",{project:foundProject})
+router.get('/:id/edit', middleware.checkProjectOwnership, function (req, res) {
+  Project.findById(req.params.id, function (err, foundProject) {
+    res.render("projects/edit", { project: foundProject })
   })
 })
 
 // Update Route
-router.put("/:id",middleware.checkProjectOwnership,function (req,res) {
-  Project.findByIdAndUpdate(req.params.id,req.body.project,function (err,updatedproject) {
-    if(err){
+router.put("/:id", middleware.checkProjectOwnership, function (req, res) {
+  Project.findByIdAndUpdate(req.params.id, req.body.project, function (err, updatedproject) {
+    if (err) {
       res.redirect('/projects')
     }
-    else{
-      res.redirect('/projects/'+req.params.id)
+    else {
+      res.redirect('/projects/' + req.params.id)
     }
   })
 })
 
 
 // DESTROY PROJECT ROUTE
-router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
-  Project.findByIdAndDelete(req.params.id,function (err) {
+router.delete('/:id', middleware.checkProjectOwnership, function (req, res) {
+  Project.findByIdAndDelete(req.params.id, function (err) {
     if (err) {
-      res.redirect('/projects/'+req.params.id)
+      res.redirect('/projects/' + req.params.id)
     }
     console.log("deleted")
     res.redirect('/projects')
   })
 })
 
- 
+
 
 module.exports = router
