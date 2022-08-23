@@ -74,7 +74,9 @@
                       <!-- Extra grids for spacing -->
                     
                       <div></div>
-                      <a href="/projects/<%= project._id%>" role="button">Verify</a>
+                      <form action="/admin/<%=project._id%>?_method=PUT" method="post">
+                        <Button type="submit">Verify</Button>
+                      </form>
                       <div></div>
                       
                     </div>
