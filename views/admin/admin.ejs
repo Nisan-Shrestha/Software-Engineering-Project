@@ -119,42 +119,6 @@
                       <% }) %>
                     </div>
 
-            <div>
-            <% projects.forEach(function(project){%>
-          
-            
-             <% if(!project.reviewStatus){ %>
-                    <article class="project">
-                        <header class="projectName">
-                          <strong><%= project.title %></strong>
-                        </header>
-                        <div class="description">
-                          Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
-                          'No abstract available!' %>
-                        </div>
-                        <div class="projectAuthor">Authors: <%= project.authors %></div>
-                        <div class="supervisor">Supervisor: <%=project.supervisor%></div>
-                        <div class="status">
-                          <% if(project.reviewStatus){%>
-                          <h4>Approved</h4>
-                          <% }else{ %>
-                          <h4>Pending</h4>
-                          <%}%>
-                        </div>
-                        <br />
-                        <div class="grid">
-                          <!-- Extra grids for spacing -->
-                        
-                          <div></div>
-                          <a href="/projects/<%= project._id%>" role="button">Verify</a>
-                          <div></div>
-                          
-                        </div>
-                      </article>
-                    <% } %>
-                
-              <% }) %>
-            </div>
 
     </div>
     <% } %>

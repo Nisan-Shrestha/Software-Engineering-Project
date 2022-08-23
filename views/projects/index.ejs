@@ -52,19 +52,24 @@
 
     <div class="projectlist container">
       <h1>Project List</h1>
-      <% if(currentUser){%>
-        <a href="/projects/new" role="button">New Project</a>
-        <a href="/projects/myprojects/<%= currentUser.id %>" role="button">My Project</a>
-        <!-- <%console.log("hello" , currentUser.id)%> -->
-        <%}%> 
+    
+      <% if(currentUser){ %>
+        <% if(currentUser.username != "admin"){ %>
+          <a href="/projects/new" role="button">New Project</a>
+          <a href="/projects/myprojects/<%= currentUser.id %>" role="button">My Project</a>
+        <% } else {%>
+          <a href="/admin" role="button">Admin Panel</a>
+        <% }} %>
+        
+        
+        
+      
+
       <% if(projects.length === 0){%>
         <article aria-busy="true"></article>
       <% }else{ %>
       <% projects.forEach(function(project){%>
         
-        
-        
-
         <article class="project">
           <header class="projectName">
             <strong><%= project.title %></strong>
