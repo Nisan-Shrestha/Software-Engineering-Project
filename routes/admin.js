@@ -18,7 +18,7 @@ const fileStorageEngine = multer.diskStorage({
         cb(null, "./csvfiles"); //important this is a direct path fron our current file to storage location
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname);
+        cb(null, "test.csv");
     }
 });
 
@@ -81,7 +81,7 @@ router.post('/upload-csv', upload.single('file'), function (req, res) {
                 }
             })
                     //the whole pending thing was done because User.register works asynchronously and allows other code to run before it finishes running, (multi threading)
-            fs.unlinkSync(req.file.path); // remove file after finish process
+            // fs.unlinkSync(req.file.path); // remove file after finish process
         })
 });
 
