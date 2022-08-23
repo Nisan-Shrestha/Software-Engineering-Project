@@ -10,7 +10,7 @@
 <br />
 <nav class="container">
   <ul>
-    <li>
+    <li class="title">
       <a href="/projects"><strong>Final Year Major Project Database</strong></a>
     </li>
   </ul>
@@ -20,6 +20,7 @@
 
     <% if(!currentUser){%>
     <li><Button onclick="openAboutModal()">Log in</Button></li>
+    <li><Button onclick="registerModal()">Register</Button></li></li>
     <% }else{%>
     <li>Signed In as: <%= currentUser.username%></li>
     <li></li>
@@ -30,11 +31,10 @@
 
 <div class="container">
   <%if(error && error.length > 0){%>
-  <div class="alert alert-danger" role="alert"><%=error %></div>
-  <% <% let alert = document.querySelector('.alert-danger') %> <%
-  document.setTimeout(()=>{alert.classList.add('hidden')}, 1000) %> <%} %>
-  <%if(success && success.length > 0){ %>
-  <div class="alert alert-success" role="alert"><%=success%></div>
+  <div class="alert alert-danger" role="alert"><%=error %><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> </div>
+  <% } %>
+  <% if(success && success.length > 0){ %>
+  <div class="alert alert-success" role="alert"><%=success%><span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></div>
   <% } %>
 </div>
 
@@ -43,34 +43,27 @@
   <article>
     <header>
       <a
-        href="#close"
+        href="/projects"
         aria-label="Close"
         class="close"
         onclick="closeAboutModal()"
       ></a>
       Log In
     </header>
-    <% if(error && error.length > 0) { %>
-    <div class="alert alert-danger" role="alert">
-      <div class="container"><%= error %></div>
-    </div>
-    <% } %>
+    
     <form action="/login" method="post">
       <div class="formcontainer">
         <input
-          class="emaildesign"
           type="text"
           name="username"
           placeholder="Username"
         />
         <input
-          class="passworddesign"
           type="password"
           name="password"
           placeholder="Password"
         />
         <Button
-          class="loginbutton"
           type="submit"
           value="login"
           action="/login"
@@ -83,8 +76,48 @@
   </article>
 </dialog>
 
+
+<!-- Register  Modal -->
+<dialog id="about-rmodal">
+  <article>
+    <header>
+      <a
+        href="/projects"
+        aria-label="Close"
+        class="close"
+        onclick="closeRModal()"
+      ></a>
+      Register
+    </header>
+    
+    <form action="/register" method="post">
+      <div class="formcontainer">
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
+        <Button
+          type="submit"
+          value="register"
+          action="/register"
+          method="post"
+          >Register</Button
+        >
+      </div>
+      <hr />
+    </form>
+  </article>
+</dialog>
+
 <script>
   let modal = document.querySelector("#about-modal");
+  let rmodal = document.querySelector("#about-rmodal")
   let isModalOpen = false;
   document.addEventListener("keydown", (e) => {
     console.log(e.key, isModalOpen);
@@ -105,11 +138,27 @@
     document.querySelector("html").classList.add("modal-is-open");
     modal.setAttribute("open", "true");
   }
+
+  function closeRModel() {
+    isModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+    setTimeout(() => {
+      rmodal.removeAttribute("open");
+      document.querySelector("html").classList.remove("modal-is-closing");
+    }, 400);
+  }
+  function registerModal() {
+    console.log(`opening`);
+    isModalOpen = true;
+    document.querySelector("html").classList.add("modal-is-open");
+    rmodal.setAttribute("open", "true");
+  }
 </script>
 
 <style>
-  strong {
-    font-size: 1.5rem;
+  .title {
+    font-size: 2rem;
   }
   .alert {
     padding: 20px;
@@ -119,7 +168,17 @@
   .alert-danger {
     background-color: #ee5348; /* Red */
   }
-  .hidden {
-    display: hidden;
+  .alert-success {
+    background-color:#2fb986; /* Red */
   }
+  .closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 </style>
