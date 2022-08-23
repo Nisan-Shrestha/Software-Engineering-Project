@@ -102,7 +102,7 @@ router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
     if (err) {
       res.redirect('/projects/'+req.params.id)
     }
-    res.redirect('/projects')
+    res.redirect('/projects/show')
   })
 })
 

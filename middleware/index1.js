@@ -50,7 +50,7 @@ middlewareObj.checkCommentOwnership = function (req,res,next) {
   }
   else{
     req.flash("error","You need to be Logged in to do that.")
-    res.redirect('/login')
+    res.redirect('/projects')
   }
 }
 
@@ -59,7 +59,7 @@ middlewareObj.isLoggedIn = function(req,res,next) {
     return next()
   }
   req.flash("error","You need to be Logged in to do that.")
-  res.redirect('/login')
+  res.redirect('/projects')
 }
 
 module.exports = middlewareObj
