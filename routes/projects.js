@@ -70,7 +70,7 @@ router.get('/myprojects/:id', middleware.isLoggedIn, (req, res) => {
 //search
 router.get('/search', (req, res) => {
   try {
-    Project.find({ $or: [{ title: { '$regex': req.query.dsearch } }, { supervisor: { '$regex': req.query.dsearch } }] }, (err, data) => {
+    Project.find({ $or: [{ title: { '$regex':new RegExp(req.query.dsearch, "i") } }, { supervisor: { '$regex': new RegExp(req.query.dsearch, "i") } }] }, (err, data) => {
       if (err) {
         console.log(err);
       } else {
