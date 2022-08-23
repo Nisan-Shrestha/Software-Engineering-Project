@@ -47,6 +47,23 @@ router.post('/',middleware.isLoggedIn,function (req,res) {
 })
 
 
+//my project
+router.get('/myprojects/:id',middleware.isLoggedIn,(req,res)=>{ 
+  try {  
+    Project.author.map(project=>{
+      project.find({$or:[{id:{'$regex':req.params.id}}]},(err,data)=>{  
+        if(err){  
+          console.log(err); 
+        }else{  
+          res.render('projects/index',{projects:data});  
+        }  
+        })  
+    })
+  } catch (error) {  
+    console.log(error); 
+  }  
+  }); 
+
 
 
 //search
@@ -57,13 +74,11 @@ router.get('/search',(req,res)=>{
       console.log(err);  
     }else{  
       res.render('projects/index',{projects:data});  
-      //res.send("DOne")
     }  
     })  
   } catch (error) {  
     console.log(error);  
   }  
-  //console.log(req.query);
   }); 
 
   router.get('/:id',function(req,res){
@@ -102,7 +117,8 @@ router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
     if (err) {
       res.redirect('/projects/'+req.params.id)
     }
-    res.redirect('/projects/show')
+    console.log("deleted")
+    res.redirect('/projects')
   })
 })
 
