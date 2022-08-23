@@ -6,6 +6,9 @@ const multer = require('multer')
 const csv = require('fast-csv');
 const cors = require("cors");
 const fs = require('fs');
+const Project = require('../models/project');
+const middleware = require('../middleware/index1');
+
 
 
 const fileStorageEngine = multer.diskStorage({
@@ -22,7 +25,15 @@ const upload = multer({ storage: fileStorageEngine });
 
 router.get('/', function (req, res) {
     // res.send("hello")
-    res.render('admin/upload')
+    Project.find({},function(err,allProjects){
+        if (err) {
+          console.log(err);
+        }
+        else{
+          res.render('admin/admin', {projects:allProjects})
+        }
+      })
+
 });
 
 router.post('/upload-csv', upload.single('file'), function (req, res) {
@@ -80,6 +91,17 @@ router.post("/register", function (req, res) {
         }
     });
 });
+
+router.put("/:id",middleware.checkProjectOwnership,function (req,res) {
+    Project.findByIdAndUpdate(req.params.id,req.body.project,function (err,updatedproject) {
+      if(err){
+        res.redirect('/admin')
+      }
+      else{
+        res.redirect('/admin/'+req.params.id)
+      }
+    })
+  })
 
 
 module.exports = router;

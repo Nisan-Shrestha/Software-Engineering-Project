@@ -42,8 +42,8 @@
         
         <%console.log(project.author[0].id)%>
         <div class="grid">
-            <div>
-                <% if(project.reviewStatus){ %>
+          <div>
+          <% if(project.reviewStatus){ %>
                     <article class="project">
                         <header class="projectName">
                           <strong><%= project.title %></strong>
@@ -66,14 +66,15 @@
                           <!-- Extra grids for spacing -->
                           <div></div>
                           <div></div>
-                          <a href="/projects/<%= project._id%>" role="button">More info</a>
+                          <a href="/projects/<%= project._id%>" role="button">Verify</a>
                           <div></div>
                           <div></div>
                         </div>
                       </article>
-            </div>
-            <div>
-                <% } else {%>
+                      <% } %>
+                    </div>
+              <div>
+             <% else {%>
                     <article class="project">
                         <header class="projectName">
                           <strong><%= project.title %></strong>
@@ -96,14 +97,14 @@
                           <!-- Extra grids for spacing -->
                           <div></div>
                           <div></div>
-                          <a href="/projects/<%= project._id%>" role="button">More info</a>
+                          <a href="/projects/<%= project._id%>" role="button">Verify</a>
                           <div></div>
                           <div></div>
                         </div>
                       </article>
-                <% } %>
+                      <% } %>
+                  </div>
 
-            </div>
 
         </div>
 
