@@ -39,11 +39,7 @@
               ><i class="fa-solid fa-magnifying-glass"></i
             ></Button>
           </form>
-          <select class="options" name="options">
-            <option value="name">Search by Project Name</option>
-            <!-- <option value="author">Search by Project Author</option> -->
-            <option value="supervisor">Search by Supervisor</option>
-          </select>
+          
         </div>
         <div></div>
       </div>
@@ -51,18 +47,25 @@
     <br />
 
     <div class="projectlist container">
-      <h1>Project List</h1>
-    
+      
       <% if(currentUser){ %>
         <% if(currentUser.username != "admin"){ %>
+          <h1>Project List</h1>
           <a href="/projects/new" role="button">New Project</a>
           <a href="/projects/myprojects/<%= currentUser.id %>" role="button">My Project</a>
-        <% } else {%>
-          <a href="/admin" role="button">Admin Panel</a>
-        <% }} %>
-        
-        
-        
+          <% } else {%>
+            <div class="grid">
+              <h1>Project List</h1>
+              <div></div>
+              <a href="/admin" ><Button>Admin Panel</Button></a>
+            </div>
+            <% }} else{%>
+              <h1>Project List</h1>  
+            <% } %>
+            
+            
+            
+     
       
 
       <% if(projects.length === 0){%>
@@ -103,5 +106,7 @@
     font-size: 1.4rem;
   }
 </style>
+
+
 
 
