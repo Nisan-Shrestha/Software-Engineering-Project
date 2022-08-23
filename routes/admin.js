@@ -101,13 +101,17 @@ router.post("/register", function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-    Project.findByIdAndUpdate(req.params.id, req.body.project, function (err, updatedproject) {
+    Project.findById(req.params.id, function (err, project) {
+      project.reviewStatus = !project.reviewStatus;
+      project.save(function (err, updatedproject) {
         if (err) {
-            res.redirect('/admin')
+          console.log(err);
+        } else {
+          res.redirect("/admin")
         }
-
+      })
     })
-})
+  });
 
 
 module.exports = router;
