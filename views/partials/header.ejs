@@ -20,7 +20,7 @@
 
     <% if(!currentUser){%>
     <li><Button onclick="openAboutModal()">Log in</Button></li>
-    <li><Button onclick="registerModal()">Register</Button></li></li>
+    <!-- <li><Button onclick="registerModal()">Register</Button></li></li> -->
     <% }else{%>
     <li>Signed In as: <%= currentUser.username%></li>
     <li></li>
@@ -77,7 +77,7 @@
 </dialog>
 
 
-<!-- Register  Modal -->
+<!-- Register  Modal
 <dialog id="about-rmodal">
   <article>
     <header>
@@ -113,7 +113,7 @@
       <hr />
     </form>
   </article>
-</dialog>
+</dialog> -->
 
 <script>
   let modal = document.querySelector("#about-modal");
@@ -139,21 +139,21 @@
     modal.setAttribute("open", "true");
   }
 
-  function closeRModel() {
-    isModalOpen = false;
-    document.querySelector("html").classList.remove("modal-is-open");
-    document.querySelector("html").classList.add("modal-is-closing");
-    setTimeout(() => {
-      rmodal.removeAttribute("open");
-      document.querySelector("html").classList.remove("modal-is-closing");
-    }, 400);
-  }
-  function registerModal() {
-    console.log(`opening`);
-    isModalOpen = true;
-    document.querySelector("html").classList.add("modal-is-open");
-    rmodal.setAttribute("open", "true");
-  }
+  // function closeRModel() {
+  //   isModalOpen = false;
+  //   document.querySelector("html").classList.remove("modal-is-open");
+  //   document.querySelector("html").classList.add("modal-is-closing");
+  //   setTimeout(() => {
+  //     rmodal.removeAttribute("open");
+  //     document.querySelector("html").classList.remove("modal-is-closing");
+  //   }, 400);
+  // }
+  // function registerModal() {
+  //   console.log(`opening`);
+  //   isModalOpen = true;
+  //   document.querySelector("html").classList.add("modal-is-open");
+  //   rmodal.setAttribute("open", "true");
+  // }
 </script>
 
 <style>
