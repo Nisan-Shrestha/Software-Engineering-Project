@@ -111,6 +111,7 @@ router.put("/:id",middleware.checkProjectOwnership,function (req,res) {
   })
 })
 
+
 // DESTROY PROJECT ROUTE
 router.delete('/:id',middleware.checkProjectOwnership,function (req,res) {
   Project.findByIdAndDelete(req.params.id,function (err) {
