@@ -8,6 +8,7 @@ const cors = require("cors");
 const fs = require('fs');
 const Project = require('../models/project');
 const middleware = require('../middleware/index1');
+const { isAdmin } = require("../middleware/index1");
 
 
 
@@ -23,22 +24,24 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
-router.get('/', function (req, res) {
+router.get('/',isAdmin, function (req, res) {
     // res.send("hello")
-    Project.find({},function(err,allProjects){
+    Project.find({}, function (err, allProjects) {
         if (err) {
-          console.log(err);
+            console.log(err);
         }
-        else{
-          res.render('admin/admin', {projects:allProjects})
+        else {
+            res.render('admin/admin', { projects: allProjects })
         }
-      })
+    })
 
 });
 
 router.post('/upload-csv', upload.single('file'), function (req, res) {
-    console.log(req.file);
 
+    var newCount = 0;
+    var errorCount = 0;
+    var pending = 0;
     const fileRows = [];
     csv.parseFile(req.file.path)
         .on("data", function (data) {
@@ -46,33 +49,38 @@ router.post('/upload-csv', upload.single('file'), function (req, res) {
         })
         .on("end", function () {
             console.log(fileRows) //contains array of arrays. Each inner array represents row of the csv file, with each element of it a column
-            var newCount = 0;
+            pending = fileRows.length-1; //check no of rows being processed
             fileRows.forEach(row => {
-                console.log(row);
-                if (row[0].toLowerCase() == "Username") {
+                if (row[0].toLowerCase() == "username") {
                     return;
                 } else {
                     var UserName = row[0];
                     var PassWord = row[1];
-
+                    console.log(UserName, " ", PassWord )
                     var newUser = new User({ username: UserName });
                     User.register(newUser, PassWord, function (err, user) {
                         if (err) {
+                            errorCount++;
                             console.log(err);
+                            console.log("error no:", errorCount)
                         } else {
-                            // passport.authenticate("local")(req, res, function () {
-                            newCount++;;
+                            newCount = newCount + 1;
                             console.log("\n new user created:", UserName)
-                            // });
                         }
-                    });console.log("\n ASASDAS new user created:", UserName)
+                        if (pending == 1) { //check if last row is being handled, if yes render result
+                            if (newCount > 0)
+                                req.flash("success", "Succesfully added " + newCount + " new accounts")
+                            if (errorCount > 0)
+                                req.flash("error", "Unable to add ", errorCount, " accounts. Check for pre-exsiting accounts")
+                            res.redirect('/admin');
+                        }
+                        pending--;//decrease pending rows
+                    });
                     //process "fileRows" and respond
                 }
             })
-            fs.unlinkSync(req.file.path);                     // remove file after finish process
-
-            // req.flash("success", "Succesfully added " + newCount + " no of new accounts")
-            res.render('admin/upload');
+                    //the whole pending thing was done because User.register works asynchronously and allows other code to run before it finishes running, (multi threading)
+            fs.unlinkSync(req.file.path); // remove file after finish process
         })
 });
 
@@ -92,14 +100,14 @@ router.post("/register", function (req, res) {
     });
 });
 
-router.put("/:id",function (req,res) {
-    Project.findByIdAndUpdate(req.params.id,req.body.project,function (err,updatedproject) {
-      if(err){
-        res.redirect('/admin')
-      }
-      
+router.put("/:id", function (req, res) {
+    Project.findByIdAndUpdate(req.params.id, req.body.project, function (err, updatedproject) {
+        if (err) {
+            res.redirect('/admin')
+        }
+
     })
-  })
+})
 
 
 module.exports = router;
