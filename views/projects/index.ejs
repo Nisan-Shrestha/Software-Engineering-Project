@@ -52,7 +52,7 @@
         <% if(currentUser.username != "admin"){ %>
           <h1>Project List</h1>
           <a href="/projects/new" role="button">New Project</a>
-          <a href="/projects/myprojects/<%= currentUser.id %>" role="button">My Project</a>
+          <a href="/projects/myprojects/<%= currentUser.username %>" role="button">My Project</a>
           <% } else {%>
             <div class="grid">
               <h1>Project List</h1>

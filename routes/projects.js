@@ -74,9 +74,8 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
 
 //my project
 router.get('/myprojects/:id', middleware.isLoggedIn, (req, res) => {
-  console.log("hello")
   try {
-    Project.find({ "author.id": req.params.id }, function (err, allProjects) {
+    Project.find({ "author.username": req.params.id }, function (err, allProjects) {
       if (err) {
         console.log(err);
       }
@@ -111,7 +110,6 @@ router.get('/:id', function (req, res) {
   Project.findById(req.params.id).populate('comments').exec(function (err, foundGround) {
     if (err) {
       console.log("ERRORORORORO:", err);
-      res.send("Error 404, The project does not exist.")
     }
     else {
       res.render('projects/show', { project: foundGround })
