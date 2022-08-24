@@ -37,6 +37,15 @@
       </div>
       <!-- <button class="formbutton"> Submit</button> -->
     </form>
+
+    <div class=" container">
+    <div class="grid">
+      <div></div>
+      
+      <button  onclick="forgotModal()">Change User Password</button>
+      
+    </div>  
+    </div>
       
 
     <div class="projectlist container">
@@ -133,10 +142,71 @@
     </div>
     <% } %>
 
+
+    <!-- Change Password  Modal -->
+<dialog id="about-fmodal">
+  <article>
+    <header>
+      <a
+        href="/admin"
+        aria-label="Close"
+        class="close"
+        onclick="closeFModal()"
+      ></a>
+     Change User Password
+    </header>
+    
+    <form action="/forgotpassword?_method=PUT" method="post">
+      <div class="formcontainer">
+        <input
+          type="text"
+          name="username"
+          placeholder="Login ID"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="New Password"
+        />
+        <Button
+          type="submit"
+          value="forgotpassword"
+          action="/forgotpassword?_method=PUT"
+          method="post"
+          >Change Password</Button>
+      </div>
+      <hr />
+    </form>
+  </article>
+</dialog>
+
     
   </body>
 </html>
 <br /><br />
+
+<script>
+  let fmodal = document.querySelector("#about-fmodal")
+  let isFModalOpen = false;
+  
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key, isFModalOpen);
+    if (e.key == "Escape" && isFModalOpen) closeFModal();
+  });
+
+  function closeFModel() {
+    isFModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+    
+  }
+  function forgotModal() {
+    console.log(`opening forgot password`);
+    //closeAboutModal();
+    document.querySelector("html").classList.add("modal-is-open");
+    fmodal.setAttribute("open", "true");
+  }
+</script>
 
 <style>
   .projectName {
