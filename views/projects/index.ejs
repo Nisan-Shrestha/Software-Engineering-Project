@@ -72,7 +72,7 @@
       <% }else{ %>
       <% projects.forEach(function(project){%>
         <% if(currentUser){ %>
-          <% if(project.author.filter(e => e.id.equals(currentUser.id)).length > 0){ var owner =  true} %>
+          <% if(project.author[0].username.filter(e => (e == (currentUser.username))).length > 0){ var owner =  true} %>
           <% } %>
         <% if(project.reviewStatus || owner ){%>      
         <article class="project">
