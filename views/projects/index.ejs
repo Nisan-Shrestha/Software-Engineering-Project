@@ -75,16 +75,23 @@
           <% if(project.author[0].username.filter(e => (e == (currentUser.username))).length > 0){ var owner =  true} %>
           <% } %>
         <% if(project.reviewStatus || owner ){%>      
-        <article class="project">
-          <header class="projectName">
+        <article >
+          <header >
             <strong><%= project.title %></strong>
           </header>
-          <div class="description">
-            Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
+          <div >
+            <strong>Abstract:</strong> <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
             'No abstract available!' %>
           </div>
-          <div class="projectAuthor">Authors: <%= project.authors %></div>
-          <div class="supervisor">Supervisor: <%=project.supervisor%></div>
+          <div>
+            <strong>Authors: </strong>
+            <% for(var i =0;i<project.author[0].user.length;i++){%> 
+            <li><%=project.author[0].user[i]%></li> 
+            <%}%>
+          </div>
+          <div >
+            <strong>Supervisor:</strong> <%=project.supervisor%>
+          </div>
           <br />
           <div class="grid">
             <!-- Extra grids for spacing -->
