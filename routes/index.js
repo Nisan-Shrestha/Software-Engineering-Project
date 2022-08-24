@@ -36,15 +36,20 @@ router.put("/changepassword", function (req, res) {
   User.findOne({ username: req.body.username }, (err, user) => {
     if (err) {
       console.log(err)
+      res.redirect("/projects");
     } else {
       user.changePassword(req.body.oldpassword, req.body.newpassword, function (err, users) {
         if (err) {
           console.log(err)
+          res.redirect("/projects");
+
         } else {
 
           User.updateOne({ _id: users._id }, { hash: users.hash, salt: users.salt }, (err, result) => {
             if (err) {
               console.log(err);
+              res.redirect("/projects");
+              
             } else {
               req.flash("success", "Password changed");
               res.redirect("/projects");
