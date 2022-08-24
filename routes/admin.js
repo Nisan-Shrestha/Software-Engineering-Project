@@ -37,7 +37,7 @@ router.get('/',isAdmin, function (req, res) {
 
 });
 
-router.post('/upload-csv', upload.single('file'), function (req, res) {
+router.post('/upload-csv',isAdmin, upload.single('file'), function (req, res) {
 
     var newCount = 0;
     var errorCount = 0;
@@ -87,7 +87,7 @@ router.post('/upload-csv', upload.single('file'), function (req, res) {
 });
 
 
-router.post("/register", function (req, res) {
+router.post("/register",isAdmin, function (req, res) {
     var newUser = new User({ username: req.body.username, user: req.body.user});
     User.register(newUser, req.body.password, function (err, user) {
         if (err) {
@@ -102,7 +102,7 @@ router.post("/register", function (req, res) {
     });
 });
 
-router.put("/:id", function (req, res) {
+router.put("/:id",isAdmin, function (req, res) {
     Project.findById(req.params.id, function (err, project) {
       project.reviewStatus = !project.reviewStatus;
       project.save(function (err, updatedproject) {

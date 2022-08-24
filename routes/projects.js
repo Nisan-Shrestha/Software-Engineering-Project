@@ -111,6 +111,7 @@ router.get('/:id', function (req, res) {
   Project.findById(req.params.id).populate('comments').exec(function (err, foundGround) {
     if (err) {
       console.log("ERRORORORORO:", err);
+      res.send("Error 404, The project does not exist.")
     }
     else {
       res.render('projects/show', { project: foundGround })
