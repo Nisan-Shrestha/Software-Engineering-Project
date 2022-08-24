@@ -3,6 +3,8 @@ var router = express.Router();
 const Project = require('../models/project');
 const Comment = require('../models/comment');
 const middleware = require('../middleware/index1');
+const User = require("../models/user");
+
 router.get('/', function (req, res) {
   Project.find({}, function (err, allProjects) {
     if (err) {
@@ -26,27 +28,46 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
   var link = req.body.link
   var image = req.body.image
   var supervisor = req.body.supervisor
- // var authors = req.body.authors
-  req.body.member.forEach(username=>{
-    
-  })
-  var author = {
-    id: req.user._id,
-    username: req.body.member,
-  }
-  var reviewStatus = false
-  var abstract = req.body.abstract
+  // var authors = req.body.authors
+  var namearray = [];
+  var pending = req.body.member.length;
+  req.body.member.forEach(Username => {
+    User.findOne({ username: Username }, function (err, foundUser) {
+      if (err) {
+        console.log("cant find user with username/rollno:", Username)
+      } else {
+        namearray.push(foundUser.user);
+        console.log("added user to project contributor: ", foundUser.user)
+        console.log("\n User object: ", foundUser)
 
-  var newProject = { title: title, image: image, description: description, author: author,  year: year, link: link, supervisor: supervisor, reviewStatus: reviewStatus, abstract: abstract }
+      }
+      pending--;
+      if (pending == 0) {
+        console.log("array of name", namearray)
+        var author = {
+          id: req.user._id,
+          username: req.body.member,
+          user: namearray
+        }
+        console.log("the pushed data ", author)
+        var reviewStatus = false
+        var abstract = req.body.abstract
 
-  Project.create(newProject, function (err, newProj) {
-    if (err) {
-      console.log("error", err);
-    }
-    else {
-      res.redirect('/projects')
-    }
-  })
+        var newProject = { title: title, image: image, description: description, author: author, year: year, link: link, supervisor: supervisor, reviewStatus: reviewStatus, abstract: abstract }
+
+        Project.create(newProject, function (err, newProj) {
+          if (err) {
+            console.log("error", err);
+          }
+          else {
+            res.redirect('/projects')
+          }
+        })
+      }
+    })
+  });
+
+
 })
 
 
@@ -54,7 +75,7 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
 router.get('/myprojects/:id', middleware.isLoggedIn, (req, res) => {
   console.log("hello")
   try {
-    Project.find({"author.id":req.params.id }, function (err, allProjects) {
+    Project.find({ "author.id": req.params.id }, function (err, allProjects) {
       if (err) {
         console.log(err);
       }
@@ -62,7 +83,7 @@ router.get('/myprojects/:id', middleware.isLoggedIn, (req, res) => {
         res.render('projects/index', { projects: allProjects })
       }
     })
-   
+
   } catch (error) {
     console.log(error);
   }
@@ -73,7 +94,7 @@ router.get('/myprojects/:id', middleware.isLoggedIn, (req, res) => {
 //search
 router.get('/search', (req, res) => {
   try {
-    Project.find({ $or: [{ title: { '$regex':new RegExp(req.query.dsearch, "i") } }, { supervisor: { '$regex': new RegExp(req.query.dsearch, "i") } }] }, (err, data) => {
+    Project.find({ $or: [{ title: { '$regex': new RegExp(req.query.dsearch, "i") } }, { supervisor: { '$regex': new RegExp(req.query.dsearch, "i") } }] }, (err, data) => {
       if (err) {
         console.log(err);
       } else {
