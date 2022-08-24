@@ -34,10 +34,9 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
   var pending = req.body.member.length;
   req.body.member.forEach(Username => {
     User.findOne({ username: Username }, function (err, foundUser) {
-      if (err || foundUser==isNull) {
+      if (err || !foundUser) {
         console.log("cant find user with username/rollno:", Username)
         pending--;
-        return;
       } else {
         namearray.push(foundUser.user);
         console.log("added user to project contributor: ", foundUser.user)
