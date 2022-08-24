@@ -39,7 +39,7 @@
             <div><strong>Authors: </strong><%= project.authors %></div>
             <div><strong>Supervisor: </strong><%= project.supervisor %></div>
             <div><strong>Year: </strong><%= project.year %></div>
-            <div><strong>Link: </strong><%= project.link%></div>
+            <div>Link: <a href=<%- project.link -%> ><%= project.link%></div></a>
             <div><strong>Abstract: </strong>
                 <div>
                   <%= project.abstract %>
