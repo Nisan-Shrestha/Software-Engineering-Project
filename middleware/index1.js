@@ -5,6 +5,7 @@ const User = require('../models/user');
 var middlewareObj = {}
 
 middlewareObj.checkProjectOwnership = function (req, res, next) {
+  console.log(req.user)
   if (req.isAuthenticated()) {
     Project.findById(req.params.id, function (err, foundProject) {
       if (err) {
@@ -13,7 +14,8 @@ middlewareObj.checkProjectOwnership = function (req, res, next) {
       }
       else {
         //if(foundProject.author.id.equals(req.user._id)){
-        if (foundProject.author.filter(e => e.id.equals(req.user._id)).length > 0) {
+        if (foundProject.author[0].username.filter(e => (e == (req.user.username))).length > 0) {
+
           return next()
         }
 
@@ -41,7 +43,7 @@ middlewareObj.isAdmin = function (req, res, next) {
         return next()
       }
     })
-  }else{
+  } else {
     req.flash("error", "You need to be Logged in to do that.")
     res.redirect('back')
   }

@@ -31,7 +31,6 @@ router.post("/register", function (req, res) {
  
 
 
-
 //changepassword
 router.put("/changepassword", function (req, res) {
   User.findOne({ username: req.body.username }, (err, user) => {

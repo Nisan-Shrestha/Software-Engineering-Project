@@ -19,7 +19,8 @@
             <header>
                 <div><h2><%= project.title %></h2></div>
                 <div class="grid">
-                  <% if(currentUser  && project.author.filter(e => e.id.equals(currentUser._id)).length > 0 ){%>
+                
+                  <% if(currentUser  && project.author[0].username.filter(e => (e == (currentUser.username))).length > 0 ){%>
 
                       <a href="/projects/<%= project._id %>/edit" ><Button>Edit</Button></a> 
                       <form action="/projects/<%= project._id %>?_method=DELETE" method="post">
