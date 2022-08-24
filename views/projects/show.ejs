@@ -38,13 +38,14 @@
             </header>
             
             <div>
-              <strong>Authors: </strong><% for(var i =0; i< project.author[0].username.length;i++){ %>
-                <%=project.author[0].user[i]%>
-              <% } %> 
+              <strong>Authors: </strong><% for(var i =0; i< project.author[0].user.length;i++){ %>
+               <li><%=project.author[0].user[i]%></li> 
+            <% } %> 
             </div>
+          </br>
             <div><strong>Supervisor: </strong><%= project.supervisor %></div>
             <div><strong>Year: </strong><%= project.year %></div>
-            <div>Link: <a href=<%- project.link -%> ><%= project.link%></div></a>
+            <div><strong>Link:</strong> <a href=<%- project.link -%> ><%= project.link%></div></a>
             <div><strong>Abstract: </strong>
                 <div>
                   <%= project.abstract %>

@@ -16,10 +16,10 @@
                 
                     <input class="boxSize" type="text" name="project[title]" value="<%=project.title%>"  placeholder=" Title" required>
                     
-                    <input  type="text" name="project[author]" value="<%=project.author[0].username[0]%>" placeholder="Member RollNo" >
-                    <input  type="text" name="project[author]" value="<%=project.author[0].username[1]%>" placeholder="Member RollNo" >
-                    <input  type="text" name="project[author]" value="<%=project.author[0].username[2]%>" placeholder="Member RollNo" >
-                    <input  type="text" name="project[author]" value="<%=project.author[0].username[3]%>" placeholder="Member RollNo" >
+                    <input  type="text" name="project[author][0][username][0]" value="<%=project.author[0].username[0]%>" placeholder="Member RollNo" >
+                    <input  type="text" name="project[author][0][username][1]" value="<%=project.author[0].username[1]%>" placeholder="Member RollNo" >
+                    <input  type="text" name="project[author][0][username][2]" value="<%=project.author[0].username[2]%>" placeholder="Member RollNo" >
+                    <input  type="text" name="project[author][0][username][3]" value="<%=project.author[0].username[3]%>" placeholder="Member RollNo" >
 
                     <input class="boxSize" type="text" name="project[supervisor]" value="<%=project.supervisor%>"  placeholder=" Supervisor"required>
                     <input class="boxSize" type="number" name="project[year]"value="<%=project.year%>"  placeholder=" Year" min="1900" max ="2030" required>
