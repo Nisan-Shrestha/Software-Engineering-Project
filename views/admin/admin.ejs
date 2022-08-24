@@ -60,7 +60,11 @@
                       Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
                       'No abstract available!' %>
                     </div>
-                    <div class="projectAuthor">Authors: <%= project.authors %></div>
+                    <div>
+                      <strong>Authors: </strong><% for(var i =0; i< project.author[0].user.length;i++){ %>
+                       <li><%=project.author[0].user[i]%></li> 
+                    <% } %> 
+                    </div>
                     <div class="supervisor">Supervisor: <%=project.supervisor%></div>
                     <div class="status">
                       <% if(project.reviewStatus){%>
@@ -98,7 +102,11 @@
                           Abstract: <%= project.abstract ? `${project.abstract.slice(0,30)}...`:
                           'No abstract available!' %>
                         </div>
-                        <div class="projectAuthor">Authors: <%= project.authors %></div>
+                        <div>
+                          <strong>Authors: </strong><% for(var i =0; i< project.author[0].user.length;i++){ %>
+                           <li><%=project.author[0].user[i]%></li> 
+                        <% } %> 
+                        </div>
                         <div class="supervisor">Supervisor: <%=project.supervisor%></div>
                         <div class="status">
                           <% if(project.reviewStatus){%>
