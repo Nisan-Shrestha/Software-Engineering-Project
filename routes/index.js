@@ -37,16 +37,20 @@ router.put("/changepassword", function (req, res) {
     if (err) {
       console.log(err)
     } else {
-
       user.changePassword(req.body.oldpassword, req.body.newpassword, function (err, users) {
-        User.updateOne({ _id: users._id }, { hash: users.hash, salt: users.salt }, (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            req.flash("success", "Password changed");
-            res.redirect("/projects");
-          }
-        })
+        if (err) {
+          console.log(err)
+        } else {
+
+          User.updateOne({ _id: users._id }, { hash: users.hash, salt: users.salt }, (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              req.flash("success", "Password changed");
+              res.redirect("/projects");
+            }
+          })
+        }
       })
     }
   })
@@ -55,8 +59,8 @@ router.put("/changepassword", function (req, res) {
 //forgotpassword
 router.put("/forgotpassword", function (req, res) {
   User.findOne({ username: req.body.username }, (err, user) => {
-    user.setPassword(req.body.password, function(err, users) { 
-      User.updateOne({ _id: users._id },{ hash: users.hash, salt: users.salt },(err,result) => {
+    user.setPassword(req.body.password, function (err, users) {
+      User.updateOne({ _id: users._id }, { hash: users.hash, salt: users.salt }, (err, result) => {
         if (err) {
           console.log(err);
         } else {
@@ -64,7 +68,7 @@ router.put("/forgotpassword", function (req, res) {
           res.redirect("/projects");
         }
       })
-    }) 
+    })
   })
 });
 
