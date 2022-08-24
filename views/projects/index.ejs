@@ -72,7 +72,10 @@
         <article aria-busy="true"></article>
       <% }else{ %>
       <% projects.forEach(function(project){%>
-        
+        <% if(currentUser){ %>
+          <% if(project.author.filter(e => e.id.equals(currentUser.id)).length > 0){ var owner =  true} %>
+          <% } %>
+        <% if(project.reviewStatus || owner ){%>      
         <article class="project">
           <header class="projectName">
             <strong><%= project.title %></strong>
@@ -93,6 +96,8 @@
             <div></div>
           </div>
         </article>
+        <% } %>
+          
       <% })} %>
     </div>
 
