@@ -36,7 +36,12 @@
                         </div>
                     </div>
             </header>
-            <div><strong>Authors: </strong><%= project.authors %></div>
+            <%  console.log(project.author[0].username) %> 
+            <div>
+              <strong>Authors: </strong><% for(var i =0; i< project.author[0].username.length;i++){ %>
+                <%=project.author[0].username[i]%>
+              <% } %> 
+            </div>
             <div><strong>Supervisor: </strong><%= project.supervisor %></div>
             <div><strong>Year: </strong><%= project.year %></div>
             <div>Link: <a href=<%- project.link -%> ><%= project.link%></div></a>

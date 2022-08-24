@@ -14,14 +14,12 @@ var projectSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        username: String
+        username: [String],
+        user : [String]
     }],
     abstract: String,
     supervisor: String,
-    members:[{
-        username: String
-        } 
-    ]
+    
 })
 
 module.exports = mongoose.model("Project", projectSchema)

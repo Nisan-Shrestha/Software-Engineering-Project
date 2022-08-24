@@ -26,15 +26,18 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
   var link = req.body.link
   var image = req.body.image
   var supervisor = req.body.supervisor
-  var authors = req.body.authors
+ // var authors = req.body.authors
+  req.body.member.forEach(username=>{
+    
+  })
   var author = {
     id: req.user._id,
-    username: req.user.username
+    username: req.body.member,
   }
   var reviewStatus = false
   var abstract = req.body.abstract
 
-  var newProject = { title: title, image: image, description: description, author: author, authors: authors, year: year, link: link, supervisor: supervisor, reviewStatus: reviewStatus, abstract: abstract }
+  var newProject = { title: title, image: image, description: description, author: author,  year: year, link: link, supervisor: supervisor, reviewStatus: reviewStatus, abstract: abstract }
 
   Project.create(newProject, function (err, newProj) {
     if (err) {
