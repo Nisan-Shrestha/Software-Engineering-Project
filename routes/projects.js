@@ -4,6 +4,7 @@ const Project = require('../models/project');
 const Comment = require('../models/comment');
 const middleware = require('../middleware/index1');
 const User = require("../models/user");
+const { isNull } = require('url/util');
 
 router.get('/', function (req, res) {
   Project.find({}, function (err, allProjects) {
@@ -33,15 +34,16 @@ router.post('/', middleware.isLoggedIn, function (req, res) {
   var pending = req.body.member.length;
   req.body.member.forEach(Username => {
     User.findOne({ username: Username }, function (err, foundUser) {
-      if (err) {
+      if (err || foundUser==isNull) {
         console.log("cant find user with username/rollno:", Username)
+        pending--;
+        return;
       } else {
         namearray.push(foundUser.user);
         console.log("added user to project contributor: ", foundUser.user)
         console.log("\n User object: ", foundUser)
-
+        pending--;
       }
-      pending--;
       if (pending == 0) {
         console.log("array of name", namearray)
         var author = {
