@@ -57,8 +57,9 @@ router.post('/upload-csv', upload.single('file'), function (req, res) {
                 } else {
                     var UserName = row[0];
                     var PassWord = row[1];
-                    console.log(UserName, " ", PassWord )
-                    var newUser = new User({ username: UserName });
+                    var aUser = row[2];
+                    console.log(UserName, " ", PassWord, " ", aUser)
+                    var newUser = new User({ username: UserName,user:aUser });
                     User.register(newUser, PassWord, function (err, user) {
                         if (err) {
                             errorCount++;
@@ -87,7 +88,7 @@ router.post('/upload-csv', upload.single('file'), function (req, res) {
 
 
 router.post("/register", function (req, res) {
-    var newUser = new User({ username: req.body.username });
+    var newUser = new User({ username: req.body.username, user: req.body.user});
     User.register(newUser, req.body.password, function (err, user) {
         if (err) {
             console.log(err);

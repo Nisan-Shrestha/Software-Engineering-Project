@@ -22,7 +22,7 @@
     <li><Button onclick="openAboutModal()">Log in</Button></li>
     <!-- <li><Button onclick="registerModal()">Register</Button></li></li> -->
     <% }else{%>
-    <li>Signed In as: <%= currentUser.username%></li>
+    <li>Signed In as: <%= currentUser.user%></li>
     <li></li>
     <li><a href="/logout" role="button">Log out</a></li>
     <%}%>
@@ -73,11 +73,16 @@
       </div>
       <hr />
     </form>
+    <div class="grid">
+      <div></div>
+      <a onclick="registerModal()">Change password?</a>
+      <div></div>
+    </div>
   </article>
 </dialog>
 
 
-<!-- Register  Modal
+<!-- Change Password  Modal -->
 <dialog id="about-rmodal">
   <article>
     <header>
@@ -87,10 +92,10 @@
         class="close"
         onclick="closeRModal()"
       ></a>
-      Register
+     Change password
     </header>
     
-    <form action="/register" method="post">
+    <form action="/changepassword" method="post">
       <div class="formcontainer">
         <input
           type="text"
@@ -98,39 +103,49 @@
           placeholder="Username"
         />
         <input
-          type="password"
-          name="password"
-          placeholder="Password"
+          type="oldpassword"
+          name="oldpassword"
+          placeholder="Old Password"
+        />
+        <input
+          type="newpassword"
+          name="newpassword"
+          placeholder="New Password"
         />
         <Button
           type="submit"
-          value="register"
-          action="/register"
+          value="changepassword"
+          action="/changepassword?_method=PUT"
           method="post"
-          >Register</Button
+          >Change Password</Button
         >
       </div>
       <hr />
     </form>
   </article>
-</dialog> -->
+</dialog>
 
 <script>
   let modal = document.querySelector("#about-modal");
   let rmodal = document.querySelector("#about-rmodal")
   let isModalOpen = false;
+  let isRModalOpen = false;
   document.addEventListener("keydown", (e) => {
     console.log(e.key, isModalOpen);
     if (e.key == "Escape" && isModalOpen) closeAboutModal();
+  });
+  document.addEventListener("keydown", (e) => {
+    console.log(e.key, isRModalOpen);
+    if (e.key == "Escape" && isRModalOpen) closeRModal();
   });
   function closeAboutModal() {
     isModalOpen = false;
     document.querySelector("html").classList.remove("modal-is-open");
     document.querySelector("html").classList.add("modal-is-closing");
-    setTimeout(() => {
-      modal.removeAttribute("open");
-      document.querySelector("html").classList.remove("modal-is-closing");
-    }, 400);
+    // setTimeout(() => {
+    //   modal.removeAttribute("open");
+    //   document.querySelector("html").classList.remove("modal-is-closing");
+    // }, 400);
   }
   function openAboutModal() {
     console.log(`opening`);
@@ -139,21 +154,19 @@
     modal.setAttribute("open", "true");
   }
 
-  // function closeRModel() {
-  //   isModalOpen = false;
-  //   document.querySelector("html").classList.remove("modal-is-open");
-  //   document.querySelector("html").classList.add("modal-is-closing");
-  //   setTimeout(() => {
-  //     rmodal.removeAttribute("open");
-  //     document.querySelector("html").classList.remove("modal-is-closing");
-  //   }, 400);
-  // }
-  // function registerModal() {
-  //   console.log(`opening`);
-  //   isModalOpen = true;
-  //   document.querySelector("html").classList.add("modal-is-open");
-  //   rmodal.setAttribute("open", "true");
-  // }
+  function closeRModel() {
+    isRModalOpen = false;
+    document.querySelector("html").classList.remove("modal-is-open");
+    document.querySelector("html").classList.add("modal-is-closing");
+    
+  }
+  function registerModal() {
+    console.log(`opening`);
+    isRModalOpen= true;
+    //closeAboutModal();
+    document.querySelector("html").classList.add("modal-is-open");
+    rmodal.setAttribute("open", "true");
+  }
 </script>
 
 <style>

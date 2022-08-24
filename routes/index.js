@@ -15,19 +15,39 @@ router.get("/register", function (req, res) {
 
 // Handles Sign up i.e. Register
 router.post("/register", function (req, res) {
-  var newUser = new User({ username: req.body.username });
+  var newUser = new User({ username: req.body.username,user: req.body.user });
   User.register(newUser, req.body.password, function (err, user) {
     if (err) {
       console.log(err);
       res.render("register", { error: err.message });
     } else {
       passport.authenticate("local")(req, res, function () {
-        req.flash("success", "Welcome " + user.username +"!!!");
+        req.flash("success", "Welcome " + user.user + "(" +user.username +")"  +"!!!");
         res.redirect("/projects");
       });
     }
   });
 });
+ 
+
+
+
+//changepassword
+router.put("/changepassword", function (req, res) {
+  User.findOne({ username: req.body.username }, (err, user) => {
+    user.changePassword(req.body.oldpassword, req.body.newpassword, function(err, users) { 
+      User.updateOne({ _id: users._id },{ hash: users.hash, salt: users.salt },(err,result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          req.flash("success", "Password changed");
+          res.redirect("/projects");
+        }
+      })
+    }) 
+  })
+});
+
 
 // Show Login Form
 router.get("/login", function (req, res) {
@@ -55,5 +75,7 @@ router.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/projects");
 });
+
+
 
 module.exports = router;

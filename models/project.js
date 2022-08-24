@@ -17,7 +17,11 @@ var projectSchema = new mongoose.Schema({
         username: String
     }],
     abstract: String,
-    supervisor: String
+    supervisor: String,
+    members:[{
+        username: String
+        } 
+    ]
 })
 
 module.exports = mongoose.model("Project", projectSchema)
