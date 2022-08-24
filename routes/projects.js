@@ -128,15 +128,36 @@ router.get('/:id/edit', middleware.checkProjectOwnership, function (req, res) {
 // Update Route
 router.put("/:id", middleware.checkProjectOwnership, function (req, res) {
   console.log("\n")
-  console.log(req.body.project);
-  Project.findByIdAndUpdate(req.params.id, req.body.project, function (err, updatedproject) {
-    if (err) {
-      res.redirect('/projects')
-    }
-    else {
-      res.redirect('/projects/' + req.params.id)
-    }
+  console.log("front to back data:", req.body.project.author);
+  var namearray=[];
+  pending = req.body.project.author[0].username.length
+  req.body.project.author[0].username.forEach(Username => {
+    User.findOne({ username: Username }, function (err, foundUser) {
+      if (err || !foundUser) {
+        // console.log("cant find user with username/rollno:", Username)
+        pending--;
+      } else {
+        namearray.push(foundUser.user);
+        // console.log("added user to project contributor: ", foundUser.user)
+        // console.log("\n User object: ", foundUser)
+        pending--;
+      }
+      if (pending == 0) {
+        req.body.project.author[0].user = namearray;
+        console.log("Updated author data:", req.body.project.author);
+        Project.findByIdAndUpdate(req.params.id, req.body.project, function (err, updatedproject) {
+          if (err) {
+            res.redirect('/projects')
+          }
+          else {
+            res.redirect('/projects/' + req.params.id)
+          }
+        })
+      }
+    })
   })
+
+
 })
 
 
