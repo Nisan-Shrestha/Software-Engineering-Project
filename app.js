@@ -14,6 +14,7 @@ const express = require("express"),
   fs = require('fs'),
   multer = require('multer'),
   csv = require('fast-csv');;
+require("dotenv").config();
 const cors = require("cors");
 
 app.use(cors());
@@ -24,9 +25,8 @@ seedDB = require("./seeds"); //idr what this does
 
 //setting up mongo
 const MongoClient = require("mongodb").MongoClient;
-
-const uri =
-  "mongodb+srv://soft-eng:hahawthwtf@cluster0.nqijx.mongodb.net/?retryWrites=true&w=majority";
+console.log("testing", process.env.DATABASEURL)
+const uri = process.env.DATABASEURL;
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect((err) => {
   const collection = client.db("test").collection("devices");
@@ -34,8 +34,7 @@ client.connect((err) => {
   client.close();
 });
 var url =
-  process.env.DATABASEURL ||
-  "mongodb+srv://soft-eng:hahawthwtf@cluster0.nqijx.mongodb.net/?retryWrites=true&w=majority";
+  process.env.DATABASEURL;
 console.log(process.env.DATABASEURL);
 
 mongoose.connect(url, { useNewUrlParser: true });
