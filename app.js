@@ -14,7 +14,7 @@ const express = require("express"),
   fs = require('fs'),
   multer = require('multer'),
   csv = require('fast-csv');;
-const cors = require("cors"); 
+const cors = require("cors");
 
 app.use(cors());
 User = require("./models/user");
@@ -91,9 +91,21 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/projects/:id/comments", commentRoutes);
 app.use("/admin", adminRoutes);
 
+//the only way to add new accounts for now is from admin apnel which can be accessed only if logged in with username 'admin'
+//making sure an admin user exits (delete from database manually if pw incorrect or need to update)
+var adminPW = "admin123";
+var newUser = new User({ username: "admin" });
+User.register(newUser, adminPW, function (err, user) {
+  if (err) {
+    console.log(err);
+    console.log("admin user already exists in database")
+  } else {
+    console.log("created a new admin user with pw: ", adminPW);
+  }
+});
 
-
+//env for deployment, 3000 for local host
 const port = process.env.PORT || 3000;
 app.listen(port, process.env.IP, function () {
-  console.log("serving Local @ 3000");
+  console.log("serving http://localhost:"+port);
 });
