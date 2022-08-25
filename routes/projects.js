@@ -1,7 +1,7 @@
 const express = require('express');
 var router = express.Router();
 const Project = require('../models/project');
-const Comment = require('../models/comment');
+// const Comment = require('../models/comment');
 const middleware = require('../middleware/index1');
 const User = require("../models/user");
 const { isNull } = require('url/util');

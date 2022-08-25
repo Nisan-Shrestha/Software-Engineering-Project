@@ -8,8 +8,6 @@ const express = require("express"),
   LocalStrategy = require("passport-local"),
   methodOverride = require("method-override"),
   Project = require("./models/project"),
-  Campground = require("./models/campground"),
-  Comment = require("./models/comment"),
   http = require('http'),
   fs = require('fs'),
   multer = require('multer'),
@@ -19,7 +17,7 @@ const cors = require("cors");
 
 app.use(cors());
 User = require("./models/user");
-seedDB = require("./seeds"); //idr what this does
+// seedDB = require("./seeds"); //idr what this does
 
 
 
@@ -76,18 +74,13 @@ app.use(function (req, res, next) {
 
 
 //loading routes (url to req,res  handler) scripts
-const commentRoutes = require("./routes/comments");
-const campgroundRoutes = require("./routes/campgrounds");
 const projectRoutes = require("./routes/projects");
 const indexRoutes = require("./routes/index");
 const adminRoutes = require("./routes/admin");
 
 // Routes ======================
 app.use("/", indexRoutes);
-app.use("/campgrounds", campgroundRoutes);
 app.use("/projects", projectRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
-app.use("/projects/:id/comments", commentRoutes);
 app.use("/admin", adminRoutes);
 
 //the only way to add new accounts for now is from admin apnel which can be accessed only if logged in with username 'admin'
