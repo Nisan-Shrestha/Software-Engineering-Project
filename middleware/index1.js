@@ -1,6 +1,6 @@
 // Allthe middle wares
 const Project = require('../models/project');
-const Comment = require('../models/comment');
+// const Comment = require('../models/comment');
 const User = require('../models/user');
 var middlewareObj = {}
 
