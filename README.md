@@ -1,1 +1,7 @@
-# Software-Engineering-Project
+# Final Year Project Database System
+
+Final Year Project Database System is a Web Application developed using Node.js for backend runtime engine and MongoDB for database. There is no explicit frontend runtime as the whole HTML is rendered in the serverside and uses EJS to dynamically create pages. The webpages themselves use libraries like PICO for easy design. Authentication and session management is handled using Passport.js which is available as a node module (package) via npm, node.js’s package manager.
+
+The project aims to act as a central archive for links to various project submitted by students of BCT at Pulchowk Campus as a part of their final year curriculum.
+The current state of the project acts as a proof of concept and maybe deployed as it is or with minor changes to the Database Models as per the information that needs to be stored and is not already implemented
+
